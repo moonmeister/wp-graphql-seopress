@@ -1,11 +1,14 @@
 {
-    "name": "ashhitch/wp-graphql-yoast-seo",
-    "description": "Query Yoast SEO data with wp-graphql",
+    "name": "moonmeister/wp-graphql-seopress",
+    "description": "Query SEOPress data with wp-graphql",
     "type": "wordpress-plugin",
     "license": "GPL-3.0-or-later",
     "authors": [{
         "name": "Ash Hitchcock",
         "email": "hello@ashleyhitchcock.co.uk"
+    },{
+    "name": "Alex Moon",
+    "email": "alex.jared.moon@gmail.com"
     }],
     "require": {
         "wp-graphql/wp-graphql": ">=0.3.8",
