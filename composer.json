@@ -1,17 +1,20 @@
 {
-    "name": "moonmeister/wp-graphql-seopress",
-    "description": "Query SEOPress data with wp-graphql",
-    "type": "wordpress-plugin",
-    "license": "GPL-3.0-or-later",
-    "authors": [{
-        "name": "Ash Hitchcock",
-        "email": "hello@ashleyhitchcock.co.uk"
-    },{
-    "name": "Alex Moon",
-    "email": "alex.jared.moon@gmail.com"
-    }],
-    "require": {
-        "wp-graphql/wp-graphql": ">=0.3.8",
-        "yoast/wordpress-seo": ">=12.3"
+  "name": "moonmeister/wp-graphql-seopress",
+  "description": "Query SEOPress data with wp-graphql",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Alex Moon",
+      "email": "alex.jared.moon@gmail.com"
+    },
+    {
+      "name": "Ash Hitchcock",
+      "email": "hello@ashleyhitchcock.co.uk"
     }
+  ],
+  "require": {
+    "wp-graphql/wp-graphql": ">=0.3.8",
+    "johnpbloch/wordpress": "^5.3"
+  }
 }

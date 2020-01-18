@@ -6,3 +6,5 @@ node_modules/
 *.tar.gz
 *.zip
 .idea*
+vendor/
+wordpress/
