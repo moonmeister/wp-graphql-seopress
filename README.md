@@ -1,4 +1,4 @@
-# WPGraphQl SEOPress Plugin
+# WPGraphQL SEOPress Plugin
 
 This is an extension to the WPGraphQL plugin (https://github.com/wp-graphql/wp-graphql) that returns SEOPress data.
 
