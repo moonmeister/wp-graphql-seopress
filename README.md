@@ -8,7 +8,7 @@ Currently returning SEO data for pages, posts, custom post types, categories and
 
 ## Upstream Source
 
-This is a direct result of [@ash_hitchcock](https://twitter.com/ash_hitchcock) on the original [Yoast SEO plugin](https://github.com/ashhitch/wp-graphql-yoast-seo). Let him Know you like his work!
+This is a direct result of [@ash_hitchcock](https://twitter.com/ash_hitchcock) on the original [Yoast SEO plugin](https://github.com/ashhitch/wp-graphql-yoast-seo). Let him know you like his work!
 
 ## Quick Install
 
