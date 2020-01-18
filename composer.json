@@ -14,7 +14,6 @@
     }
   ],
   "require": {
-    "wp-graphql/wp-graphql": ">=0.3.8",
-    "johnpbloch/wordpress": "^5.3"
+    "wp-graphql/wp-graphql": ">=0.3.8"
   }
 }
