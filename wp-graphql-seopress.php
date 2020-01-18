@@ -8,7 +8,7 @@
  * Author URI:      https://www.moonmeister.net
  * Text Domain:     wp-graphql-seopres
  * Domain Path:     /languages
- * Version:         1.0.1
+ * Version:         1.0.2
  *
  * @package         WP_Graphql_SEOPRESS
  */
@@ -23,7 +23,7 @@ add_action('graphql_register_types', function () {
   $post_types = \WPGraphQL::get_allowed_post_types();
   $taxonomies = \WPGraphQL::get_allowed_taxonomies();
 
-  register_graphql_object_type('SEO', [
+  register_graphql_object_type('SEOPress', [
     'fields' => [
       'metaTitle' => ['type' => 'String'],
       'metaDesc' => ['type' => 'String'],
@@ -44,7 +44,7 @@ add_action('graphql_register_types', function () {
 
       if (isset($post_type_object->graphql_single_name)) :
         register_graphql_field($post_type_object->graphql_single_name, 'seo', [
-          'type' => 'SEO',
+          'type' => 'SEOPress',
           'description' => __('The SEOPress data of the ' . $post_type_object->graphql_single_name, 'wp-graphql'),
           'resolve' => function ($post, array $args, AppContext $context) {
 
