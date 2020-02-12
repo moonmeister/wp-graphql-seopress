@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a53bf528331397ac0aa4ef91afaa61b",
+    "content-hash": "e285fff117f2df7393eb3eb8c3a5a685",
     "packages": [
         {
             "name": "ivome/graphql-relay-php",
@@ -94,16 +94,16 @@
         },
         {
             "name": "wp-graphql/wp-graphql",
-            "version": "v0.5.1",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-graphql/wp-graphql.git",
-                "reference": "c6fbc3bdbce610cdc5996cd2023b37606d09de0c"
+                "reference": "db95b48a8c77978f6ae5810a0788c95c8e2f0be5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-graphql/wp-graphql/zipball/c6fbc3bdbce610cdc5996cd2023b37606d09de0c",
-                "reference": "c6fbc3bdbce610cdc5996cd2023b37606d09de0c",
+                "url": "https://api.github.com/repos/wp-graphql/wp-graphql/zipball/db95b48a8c77978f6ae5810a0788c95c8e2f0be5",
+                "reference": "db95b48a8c77978f6ae5810a0788c95c8e2f0be5",
                 "shasum": ""
             },
             "require": {
@@ -148,7 +148,7 @@
                 }
             ],
             "description": "GraphQL API for WordPress",
-            "time": "2019-12-13T17:18:57+00:00"
+            "time": "2020-01-24T20:31:50+00:00"
         }
     ],
     "packages-dev": [],
