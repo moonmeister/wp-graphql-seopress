@@ -25,7 +25,7 @@ composer require moonmeister/wp-graphql-seopress
 
 To query for the SEOPress Data as the seo object to your query:
 
-```
+```graphql
 {
   pages(first: 10) {
     edges {
