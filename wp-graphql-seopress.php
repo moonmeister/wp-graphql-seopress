@@ -16,11 +16,15 @@
  * @package wp-graphql-seopress
  */
 
+namespace WPGraphQL\Extensions\SEOPress;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
+
 use WPGraphQL\AppContext;
+
 use WPGraphQL\Data\DataSource;
 
 add_action(
@@ -126,16 +130,115 @@ add_action(
 	}
 );
 
-// https://developer.wordpress.org/reference/functions/register_setting/
-// function seopress_in_graphql( $args, $defaults, $option_group, $option_name ) {
-// if ( strpos( $option_name, 'seopress_' ) !== false ) {
-// $new_args                        = $args();
-// $new_args['show_in_graphql']     = true;
-// $new_args['graphql_single_name'] = "seoPress{$option_name}";
-// $new_args['graphql_plural_name'] = "seoPress{$option_name}s";
-// }
-// return $args;
-// }
 
-// add_filter('register_setting_args', 'seopress_in_graphql', 10, 4);
-// add_action('graphql_init', 'seopress_options');
+
+
+// adding settings pages to WPGraphQL
+add_action(
+	'graphql_register_types',
+	function() {
+		register_graphql_field(
+			'RootQuery',
+			'seoPressSettings',
+			array(
+				'type'    => 'SEOPressSettings',
+				'resolve' => function() {
+					return true;
+				},
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings',
+			array(
+				'description' => 'All SEOPress admin settings pages.',
+				'fields'      => array(
+					'titlesMetas' => array(
+						'type'    => 'SEOPressSettings_TitlesMetas',
+						'resolve' => function() {
+							return get_option( 'seopress_titles_option_name' );
+						},
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TitlesMetas',
+			array(
+				'description' => __( 'Manage all your titles & metas for post types, taxonomies, archives...', 'wpgraphql_seopress' ),
+				'fields'      => array(
+					'seperator'       => array(
+						'type'        => 'String',
+						'description' => 'Use this separator with %%sep%% in your title and meta description.',
+						'resolve'     => function( $options ) {
+							$result = $options['seopress_titles_sep'];
+							return isset( $result ) ? $result : null;
+						},
+					),
+					'home'            => array(
+						'type'        => 'SEOPressSettings_TitlesMetas_Home',
+						'description' => 'Customize your title & meta description for homepage',
+						'resolve'     => function ( $data ) {
+							return $data;
+						},
+					),
+					'singlePostTypes' => array(
+						'type'        => 'SEOPressSettings_TitlesMetas_SinglePostTypes',
+						'description' => 'Customize your titles & metas for Single Custom Post Types',
+						'resolve'     => function ( $data ) {
+							return $data;
+						},
+					),
+					'archives'        => array(
+						'type'        => 'SEOPressSettings_TitlesMetas_Archives',
+						'description' => 'Customize your metas for all archives',
+						'resolve'     => function ( $data ) {
+							return $data;
+						},
+					),
+					'taxonomies'      => array(
+						'type'        => 'SEOPressSettings_TitlesMetas_Taxonomies',
+						'description' => 'Customize your metas for all taxonomies archives',
+						'resolve'     => function ( $data ) {
+							return $data;
+						},
+					),
+					'advanced'        => array(
+						'type'        => 'SEOPressSettings_TitlesMetas_Advanced',
+						'description' => 'Customize your metas for all pages',
+						'resolve'     => function ( $data ) {
+							return $data;
+						},
+					),
+
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TitlesMetas_Home',
+			array(
+				'fields' => array(
+					'title'       => array(
+						'type'        => 'String',
+						'description' => 'meta title for homepage.',
+						'resolve'     => function( $options ) {
+							$result = $options['seopress_titles_home_site_title'];
+							return isset( $result ) ? $result : null;
+						},
+					),
+					'description' => array(
+						'type'        => 'String',
+						'description' => 'meta description for homepage.',
+						'resolve'     => function( $options ) {
+							$result = $options['seopress_titles_home_site_desc'];
+							return isset( $result ) ? $result : null;
+						},
+					),
+				),
+			)
+		);
+	},
+	10
+);
