@@ -58,19 +58,11 @@ add_action(
 						'seo',
 						array(
 							'type'        => 'SEOPress',
-							'description' => __( 'The SEOPress data of the ' . $post_type_object->graphql_single_name, 'wp-graphql' ),
+							'description' => __( "The SEOPress data of the {$post_type_object->graphql_single_name}", 'wp-graphql' ),
 							'resolve'     => function ( $post, array $args, AppContext $context ) {
 
 								// Base array.
 								$seo = array();
-
-								query_posts(
-									array(
-										'p'         => $$term_obj->term_id,
-										'post_type' => 'any',
-									)
-								);
-								the_post();
 
 								// Get data.
 								$seo = array(
@@ -86,7 +78,6 @@ add_action(
 									'twitterDescription'   => trim( get_post_meta( $post->ID, '_seopress_social_twitter_desc', true ) ),
 									'twitterImage'         => DataSource::resolve_post_object( get_post_meta( $post->ID, '_seopress_social_twitter_img', true ), $context ),
 								);
-								wp_reset_query();
 
 								return ! empty( $seo ) ? $seo : null;
 							},
@@ -101,64 +92,47 @@ add_action(
 
 				$taxonomy = get_taxonomy( $tax );
 
-				if ( empty( $taxonomy ) || ! isset( $taxonomy->graphql_single_name ) ) {
-					return;
-				}
+				if ( isset( $taxonomy->graphql_single_name ) ) :
+					register_graphql_field(
+						$taxonomy->graphql_single_name,
+						'seo',
+						array(
+							'type'        => 'SEOPress',
+							'description' => __( "The SEOPress data of the {$taxonomy->label} taxonomy.", 'wp-graphql' ),
+							'resolve'     => function ( $term, array $args, AppContext $context ) {
 
-				register_graphql_field(
-					$taxonomy->graphql_single_name,
-					'seo',
-					array(
-						'type'        => 'SEO',
-						'description' => __( 'The SEOPress data of the ' . $taxonomy->label . ' taxonomy.', 'wp-graphql' ),
-						'resolve'     => function ( $term, array $args, AppContext $context ) {
+								// Get data.
+								$seo = array(
+									'metaTitle'            => trim( get_term_meta( $term->term_id, '_seopress_titles_title', true ) ),
+									'canonicalUrl'         => trim( get_term_meta( $term->term_id, '_seopress_robots_canonical', true ) ),
+									'metaDesc'             => trim( get_term_meta( $term->term_id, '_seopress_titles_desc', true ) ),
+									'metaRobotsNoindex'    => trim( get_term_meta( $term->term_id, '_seopress_robots_index', true ) ),
+									'metaRobotsNofollow'   => trim( get_term_meta( $term->term_id, '_seopress_robots_follow', true ) ),
+									'opengraphTitle'       => trim( get_term_meta( $term->term_id, '_seopress_social_fb_title', true ) ),
+									'opengraphDescription' => trim( get_term_meta( $term->term_id, '_seopress_social_fb_desc', true ) ),
+									'opengraphImage'       => DataSource::resolve_term_object( get_term_meta( $term->term_id, '_seopress_social_fb_img', true ), $context ),
+									'twitterTitle'         => trim( get_term_meta( $term->term_id, '_seopress_social_twitter_title', true ) ),
+									'twitterDescription'   => trim( get_term_meta( $term->term_id, '_seopress_social_twitter_desc', true ) ),
+									'twitterImage'         => DataSource::resolve_term_object( get_term_meta( $term->term_id, '_seopress_social_twitter_img', true ), $context ),
+								);
 
-							$term_obj = get_term( $term->term_id );
-
-							query_posts(
-								array(
-									'tax_query' => array(
-										array(
-											'taxonomy' => $term_obj->taxonomy,
-											'terms'    => $term_obj->term_id,
-											'field'    => 'term_id',
-										),
-									),
-								)
-							);
-							the_post();
-
-							// Get data.
-							$seo = array(
-								'canonicalUrl'         => trim( get_post_meta( $term_obj->ID, '_seopress_robots_canonical', true ) ),
-								'metaTitle'            => trim( get_term_meta( $term_obj->term_id, '_seopress_titles_title', true ) ),
-								'metaDesc'             => trim( get_term_meta( $term_obj->term_id, '_seopress_titles_desc', true ) ),
-								'metaRobotsNoindex'    => trim( get_term_meta( $term_obj->term_id, '_seopress_robots_index', true ) ),
-								'metaRobotsNofollow'   => trim( get_term_meta( $term_obj->term_id, '_seopress_robots_follow', true ) ),
-								'opengraphTitle'       => trim( get_term_meta( $term_obj->term_id, '_seopress_social_fb_title', true ) ),
-								'opengraphDescription' => trim( get_term_meta( $term_obj->term_id, '_seopress_social_fb_desc', true ) ),
-								'opengraphImage'       => DataSource::resolve_term_object( get_term_meta( $term_obj->term_id, '_seopress_social_fb_img', true ), $context ),
-								'twitterTitle'         => trim( get_term_meta( $term_obj->term_id, '_seopress_social_twitter_title', true ) ),
-								'twitterDescription'   => trim( get_term_meta( $term_obj->term_id, '_seopress_social_twitter_desc', true ) ),
-								'twitterImage'         => DataSource::resolve_term_object( get_term_meta( $term_obj->term_id, '_seopress_social_twitter_img', true ), $context ),
-							);
-							wp_reset_query();
-
-							return ! empty( $seo ) ? $seo : null;
-						},
-					)
-				);
+								return ! empty( $seo ) ? $seo : null;
+							},
+						)
+					);
+				endif;
 			}
 		}
 	}
 );
 
-// function seopress_in_graphql($args, $defaults, $option_group, $option_name)
-// {
-// if (strpos($option_name, 'seopress_') !== false) {
-// $args['show_in_graphql'] = true;
-// $args['graphql_single_name'] = 'seoPress' + $option_name;
-// $args['graphql_plural_name'] = 'seoPress' + $option_name + 's';
+// https://developer.wordpress.org/reference/functions/register_setting/
+// function seopress_in_graphql( $args, $defaults, $option_group, $option_name ) {
+// if ( strpos( $option_name, 'seopress_' ) !== false ) {
+// $new_args                        = $args();
+// $new_args['show_in_graphql']     = true;
+// $new_args['graphql_single_name'] = "seoPress{$option_name}";
+// $new_args['graphql_plural_name'] = "seoPress{$option_name}s";
 // }
 // return $args;
 // }
