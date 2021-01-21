@@ -1,3 +1,5 @@
+HEY YOU THERE! Do you use this package? Want to make it better? Let me know and I'll probably add you as a contributor cause I don't have the time.
+
 # WPGraphQL SEOPress Plugin
 
 This is an extension to the WPGraphQL plugin (https://github.com/wp-graphql/wp-graphql) that returns SEOPress data.
