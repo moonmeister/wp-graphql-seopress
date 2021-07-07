@@ -17,10 +17,10 @@
 		"wp-graphql/wp-graphql": ">=0.6.1"
 	},
 	"require-dev": {
-		"lucatume/wp-browser": "^2.2.",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-		"wp-coding-standards/wpcs": "^2.2",
-		"phpcompatibility/phpcompatibility-wp": "^2.0"
+		"lucatume/wp-browser": "^2.6",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+		"wp-coding-standards/wpcs": "^2.3",
+		"phpcompatibility/phpcompatibility-wp": "^2.1"
 	},
 	"scripts": {
 		"phpcs-i": [
