@@ -32,18 +32,19 @@ add_action(
 		register_graphql_object_type(
 			'SEOPress',
 			array(
+				'description' => __('The SEOPress schema data', 'wp-graphql'),
 				'fields' => array(
-					'canonicalUrl'         => array( 'type' => 'String' ),
-					'metaTitle'            => array( 'type' => 'String' ),
-					'metaDesc'             => array( 'type' => 'String' ),
-					'metaRobotsNoindex'    => array( 'type' => 'String' ),
-					'metaRobotsNofollow'   => array( 'type' => 'String' ),
-					'opengraphTitle'       => array( 'type' => 'String' ),
-					'opengraphDescription' => array( 'type' => 'String' ),
-					'opengraphImage'       => array( 'type' => 'MediaItem' ),
-					'twitterTitle'         => array( 'type' => 'String' ),
-					'twitterDescription'   => array( 'type' => 'String' ),
-					'twitterImage'         => array( 'type' => 'MediaItem' ),
+					'canonicalUrl'         => array( 'type' => 'String', 'description' => 'The preferred URL for the page.' ),
+					'metaTitle'            => array( 'type' => 'String', 'description' => 'The preferred title for the page.' ),
+					'metaDesc'             => array( 'type' => 'String', 'description' => 'The preferred description for the page.' ),
+					'metaRobotsNoindex'    => array( 'type' => 'String', 'description' => 'Should robots index this page. Returns `yes` if Noindex' ),
+					'metaRobotsNofollow'   => array( 'type' => 'String', 'description' => 'Should robots index linked pages. Returns `yes` if Noindex' ),
+					'opengraphTitle'       => array( 'type' => 'String', 'description' => 'The preferred OpenGraph title for the page.' ),
+					'opengraphDescription' => array( 'type' => 'String', 'description' => 'The preferred OpenGraph description for the page.' ),
+					'opengraphImage'       => array( 'type' => 'MediaItem', 'description' => 'The preferred OpenGraph image for the page.' ),
+					'twitterTitle'         => array( 'type' => 'String', 'description' => 'The preferred Twitter title for the page.' ),
+					'twitterDescription'   => array( 'type' => 'String', 'description' => 'The preferred Twitter description for the page.' ),
+					'twitterImage'         => array( 'type' => 'MediaItem', 'description' => 'The preferred Twitter image for the page.' ),
 				),
 			)
 		);
