@@ -73,10 +73,10 @@ add_action(
 									'metaRobotsNofollow'   => trim( get_post_meta( $post->ID, '_seopress_robots_follow', true ) ),
 									'opengraphTitle'       => trim( get_post_meta( $post->ID, '_seopress_social_fb_title', true ) ),
 									'opengraphDescription' => trim( get_post_meta( $post->ID, '_seopress_social_fb_desc', true ) ),
-									'opengraphImage'       => DataSource::resolve_post_object( get_post_meta( $post->ID, '_seopress_social_fb_img', true ), $context ),
+									'opengraphImage'       => trim( get_post_meta( $post->ID, '_seopress_social_fb_img', true ), $context),
 									'twitterTitle'         => trim( get_post_meta( $post->ID, '_seopress_social_twitter_title', true ) ),
 									'twitterDescription'   => trim( get_post_meta( $post->ID, '_seopress_social_twitter_desc', true ) ),
-									'twitterImage'         => DataSource::resolve_post_object( get_post_meta( $post->ID, '_seopress_social_twitter_img', true ), $context ),
+									'twitterImage'         => trim( get_post_meta( $post->ID, '_seopress_social_twitter_img', true ), $context),
 								);
 
 								return ! empty( $seo ) ? $seo : null;
