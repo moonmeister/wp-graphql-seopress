@@ -73,10 +73,10 @@ add_action(
 									'metaRobotsNofollow'   => trim( get_post_meta( $post->ID, '_seopress_robots_follow', true ) ),
 									'opengraphTitle'       => trim( get_post_meta( $post->ID, '_seopress_social_fb_title', true ) ),
 									'opengraphDescription' => trim( get_post_meta( $post->ID, '_seopress_social_fb_desc', true ) ),
-									'opengraphImage'       => trim( get_post_meta( $post->ID, '_seopress_social_fb_img', true ), $context),
+									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred(get_post_meta( $post->ID, '_seopress_social_fb_img', true )),
 									'twitterTitle'         => trim( get_post_meta( $post->ID, '_seopress_social_twitter_title', true ) ),
 									'twitterDescription'   => trim( get_post_meta( $post->ID, '_seopress_social_twitter_desc', true ) ),
-									'twitterImage'         => trim( get_post_meta( $post->ID, '_seopress_social_twitter_img', true ), $context),
+									'twitterImage'         => $context->get_loader( 'post' )->load_deferred(get_post_meta( $post->ID, '_seopress_social_twitter_img', true )),
 								);
 
 								return ! empty( $seo ) ? $seo : null;
@@ -110,10 +110,10 @@ add_action(
 									'metaRobotsNofollow'   => trim( get_term_meta( $term->term_id, '_seopress_robots_follow', true ) ),
 									'opengraphTitle'       => trim( get_term_meta( $term->term_id, '_seopress_social_fb_title', true ) ),
 									'opengraphDescription' => trim( get_term_meta( $term->term_id, '_seopress_social_fb_desc', true ) ),
-									'opengraphImage'       => DataSource::resolve_term_object( get_term_meta( $term->term_id, '_seopress_social_fb_img', true ), $context ),
+									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred( get_term_meta( $term->term_id, '_seopress_social_fb_img', true ), $context ),
 									'twitterTitle'         => trim( get_term_meta( $term->term_id, '_seopress_social_twitter_title', true ) ),
 									'twitterDescription'   => trim( get_term_meta( $term->term_id, '_seopress_social_twitter_desc', true ) ),
-									'twitterImage'         => DataSource::resolve_term_object( get_term_meta( $term->term_id, '_seopress_social_twitter_img', true ), $context ),
+									'twitterImage'         => $context->get_loader( 'post' )->load_deferred( get_term_meta( $term->term_id, '_seopress_social_twitter_img', true ), $context ),
 								);
 
 								return ! empty( $seo ) ? $seo : null;
