@@ -31,15 +31,4 @@
   <!-- Add source codes in the report -->
   <arg value="s"/>
 
-  <!-- Remove the class naming error temporarily -->
-  <rule ref="WordPress.Files.FileName">
-    <properties>
-      <property name="strict_class_file_names" value="false"/>
-    </properties>
-  </rule>
-
-  <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
-    <severity>0</severity>
-  </rule>
-
 </ruleset>

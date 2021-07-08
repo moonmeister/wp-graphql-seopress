@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore
 
 /**
  * Plugin Name:     WPGraphQL for SEOPress
@@ -32,19 +32,52 @@ add_action(
 		register_graphql_object_type(
 			'SEOPress',
 			array(
-				'description' => __('The SEOPress schema data', 'wp-graphql'),
-				'fields' => array(
-					'canonicalUrl'         => array( 'type' => 'String', 'description' => 'The preferred URL for the page.' ),
-					'metaTitle'            => array( 'type' => 'String', 'description' => 'The preferred title for the page.' ),
-					'metaDesc'             => array( 'type' => 'String', 'description' => 'The preferred description for the page.' ),
-					'metaRobotsNoindex'    => array( 'type' => 'String', 'description' => 'Should robots skip indexing this page. Returns `yes` if Noindex' ),
-					'metaRobotsNofollow'   => array( 'type' => 'String', 'description' => 'Should robots skip following linked pages. Returns `yes` if Noindex' ),
-					'opengraphTitle'       => array( 'type' => 'String', 'description' => 'The preferred OpenGraph title for the page.' ),
-					'opengraphDescription' => array( 'type' => 'String', 'description' => 'The preferred OpenGraph description for the page.' ),
-					'opengraphImage'       => array( 'type' => 'MediaItem', 'description' => 'The preferred OpenGraph image for the page.' ),
-					'twitterTitle'         => array( 'type' => 'String', 'description' => 'The preferred Twitter title for the page.' ),
-					'twitterDescription'   => array( 'type' => 'String', 'description' => 'The preferred Twitter description for the page.' ),
-					'twitterImage'         => array( 'type' => 'MediaItem', 'description' => 'The preferred Twitter image for the page.' ),
+				'description' => __( 'The SEOPress schema data', 'wp-graphql' ),
+				'fields'      => array(
+					'canonicalUrl'         => array(
+						'type'        => 'String',
+						'description' => 'The preferred URL for the page.',
+					),
+					'metaTitle'            => array(
+						'type'        => 'String',
+						'description' => 'The preferred title for the page.',
+					),
+					'metaDesc'             => array(
+						'type'        => 'String',
+						'description' => 'The preferred description for the page.',
+					),
+					'metaRobotsNoindex'    => array(
+						'type'        => 'String',
+						'description' => 'Should robots skip indexing this page. Returns `yes` if Noindex',
+					),
+					'metaRobotsNofollow'   => array(
+						'type'        => 'String',
+						'description' => 'Should robots skip following linked pages. Returns `yes` if Noindex',
+					),
+					'opengraphTitle'       => array(
+						'type'        => 'String',
+						'description' => 'The preferred OpenGraph title for the page.',
+					),
+					'opengraphDescription' => array(
+						'type'        => 'String',
+						'description' => 'The preferred OpenGraph description for the page.',
+					),
+					'opengraphImage'       => array(
+						'type'        => 'MediaItem',
+						'description' => 'The preferred OpenGraph image for the page.',
+					),
+					'twitterTitle'         => array(
+						'type'        => 'String',
+						'description' => 'The preferred Twitter title for the page.',
+					),
+					'twitterDescription'   => array(
+						'type'        => 'String',
+						'description' => 'The preferred Twitter description for the page.',
+					),
+					'twitterImage'         => array(
+						'type'        => 'MediaItem',
+						'description' => 'The preferred Twitter image for the page.',
+					),
 				),
 			)
 		);
@@ -74,10 +107,10 @@ add_action(
 									'metaRobotsNofollow'   => trim( get_post_meta( $post->ID, '_seopress_robots_follow', true ) ),
 									'opengraphTitle'       => trim( get_post_meta( $post->ID, '_seopress_social_fb_title', true ) ),
 									'opengraphDescription' => trim( get_post_meta( $post->ID, '_seopress_social_fb_desc', true ) ),
-									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred(get_post_meta( $post->ID, '_seopress_social_fb_img', true )),
+									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred( get_post_meta( $post->ID, '_seopress_social_fb_img', true ) ),
 									'twitterTitle'         => trim( get_post_meta( $post->ID, '_seopress_social_twitter_title', true ) ),
 									'twitterDescription'   => trim( get_post_meta( $post->ID, '_seopress_social_twitter_desc', true ) ),
-									'twitterImage'         => $context->get_loader( 'post' )->load_deferred(get_post_meta( $post->ID, '_seopress_social_twitter_img', true )),
+									'twitterImage'         => $context->get_loader( 'post' )->load_deferred( get_post_meta( $post->ID, '_seopress_social_twitter_img', true ) ),
 								);
 
 								return ! empty( $seo ) ? $seo : null;
@@ -126,17 +159,3 @@ add_action(
 		}
 	}
 );
-
-// https://developer.wordpress.org/reference/functions/register_setting/
-// function seopress_in_graphql( $args, $defaults, $option_group, $option_name ) {
-// if ( strpos( $option_name, 'seopress_' ) !== false ) {
-// $new_args                        = $args();
-// $new_args['show_in_graphql']     = true;
-// $new_args['graphql_single_name'] = "seoPress{$option_name}";
-// $new_args['graphql_plural_name'] = "seoPress{$option_name}s";
-// }
-// return $args;
-// }
-
-// add_filter('register_setting_args', 'seopress_in_graphql', 10, 4);
-// add_action('graphql_init', 'seopress_options');
