@@ -47,11 +47,11 @@ add_action(
 						'description' => 'The preferred description for the page.',
 					),
 					'metaRobotsNoindex'    => array(
-						'type'        => 'String',
+						'type'        => 'Boolean',
 						'description' => 'Should robots skip indexing this page. Returns `yes` if Noindex',
 					),
 					'metaRobotsNofollow'   => array(
-						'type'        => 'String',
+						'type'        => 'Boolean',
 						'description' => 'Should robots skip following linked pages. Returns `yes` if Noindex',
 					),
 					'opengraphTitle'       => array(
