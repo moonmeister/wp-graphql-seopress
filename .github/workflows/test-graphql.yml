@@ -1,0 +1,40 @@
+on: pull_request
+name: Test GraphQL
+
+jobs:
+  nonpro:
+    name: SEOPress Non-Pro
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - name: Upload PHP to Non-Pro Test Environment
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: 'https://wp-graphql-seopress-testing-nonpro.randomcpu.com/new-wp-graphql-seopress.php'
+          method: 'POST'
+          files: '{ "file": "${{ github.workspace }}/wp-graphql-seopress.php" }'
+      - name: Install NodeJS
+        uses: actions/setup-node@v1
+      - name: Install inso
+        run: npm install -g insomnia-inso
+      - name: Run test suites for Non-Pro Test Environment
+        run: inso -a ${{ github.workspace }}/.insomnia/ run test "wp-graphql-seopress" --env "wp-graphql-seopress-testing-nonpro" --ci
+  pro:
+    name: SEOPress Pro
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - name: Upload PHP to Pro Test Environment
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: 'https://wp-graphql-seopress-testing-pro.randomcpu.com/new-wp-graphql-seopress.php'
+          method: 'POST'
+          files: '{ "file": "${{ github.workspace }}/wp-graphql-seopress.php" }'
+      - name: Install NodeJS
+        uses: actions/setup-node@v1
+      - name: Install inso
+        run: npm install -g insomnia-inso
+      - name: Run test suites for Pro Test Environment
+        run: inso -a ${{ github.workspace }}/.insomnia/ run test "wp-graphql-seopress" --env "wp-graphql-seopress-testing-pro" --ci
