@@ -37,8 +37,25 @@ To query for the SEOPress Data as the seo object to your query:
         seo {
           metaTitle
           metaDesc
+          canonicalUrl
           metaRobotsNoindex
           metaRobotsNofollow
+          metaRobotsArchive
+          metaRobotsBreadcrumbs
+          metaRobotsImageIndex
+          metaRobotsOdp
+          metaRobotsPrimaryCategory
+          metaRobotsSnippet
+          metaNewsDisabled
+          metaVideo
+          metaVideoDisabled
+          redirectionsEnabled
+          redirectionsType
+          redirectionsURL
+          targetKeywords
+          proSchemas
+          proSchemasManual
+          hasProLicense
           opengraphTitle
           opengraphDescription
           opengraphImage {
@@ -52,7 +69,7 @@ To query for the SEOPress Data as the seo object to your query:
             altText
             sourceUrl
             srcSet
-        }
+          }
         }
       }
     }
