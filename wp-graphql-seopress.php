@@ -151,6 +151,7 @@ add_action(
 
 		register_graphql_object_type( 'SEOPress', $seopress_object );
 
+		// Titles & Metas Settings
 		register_graphql_object_type(
 			'SEOPressSettings_TitleDescription',
 			array(
@@ -300,17 +301,128 @@ add_action(
 			)
 		);
 
+		 // XML - HTML Sitemap Settings
+		register_graphql_object_type(
+			'SEOPressSettings_ShouldBeIncluded',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'include' => array(
+						'type'        => 'Boolean',
+						'description' => 'Should this be included in the sitemap?',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_PostTypesList',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'post'       => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+					'page'       => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+					'attachment' => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TaxonomiesList',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'category' => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+					'postTag'  => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_XmlHtmlSitemap',
+			array(
+				'description' => 'All SEOPress admin settings pages.',
+				'fields'      => array(
+					'xmlSitemapGeneralEnabled' => array(
+						'type'        => 'boolean',
+						'description' => 'Is the main XML sitemap enabled?',
+					),
+					'xmlSitemapImageEnabled'   => array(
+						'type'        => 'boolean',
+						'description' => 'Is the XML sitemap for images enabled?',
+					),
+					'xmlSitemapVideoEnabled'   => array(
+						'type'        => 'boolean',
+						'description' => 'Is the XML sitemap for images enabled?',
+					),
+					'xmlSitemapAuthorEnabled'  => array(
+						'type'        => 'boolean',
+						'description' => 'Is the XML sitemap for authors enabled?',
+					),
+					'xmlSitemapHTMLEnabled'    => array(
+						'type'        => 'boolean',
+						'description' => 'Is the HTML sitemap version enabled?',
+					),
+					'sitemapPostTypes'         => array(
+						'type'        => 'SEOPressSettings_PostTypesList',
+						'description' => 'Which types of posts should be included in the sitemaps?',
+					),
+					'sitemapTaxonomies'        => array(
+						'type'        => 'SEOPressSettings_TaxonomiesList',
+						'description' => 'Which taxonomies should be included in the sitemaps?',
+					),
+					'htmlMapping'              => array(
+						'type'        => 'String',
+						'description' => 'Which post, page, or custom post type ID should be used to display the sitemap?',
+					),
+					'htmlExclude'              => array(
+						'type'        => 'String',
+						'description' => 'Which posts, pages, custom post types, or terms should be excluded from sitemap?',
+					),
+					'htmlOrder'                => array(
+						'type'        => 'String',
+						'description' => 'In which order should posts be sorted in HTML sitemap?',
+					),
+					'htmlOrderby'              => array(
+						'type'        => 'String',
+						'description' => 'What should posts be sorted by in HTML sitemap?',
+					),
+					'htmlDate'                 => array(
+						'type'        => 'Boolean',
+						'description' => 'Disable the display of the publication date in HTML sitemaps.',
+					),
+					'htmlArchiveLinks'         => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove links from archive pages in HTML sitemaps.',
+					),
+				),
+			)
+		);
+
 		register_graphql_object_type(
 			'SEOPressSettings',
 			array(
 				'description' => 'All SEOPress admin settings pages.',
 				'fields'      => array(
-					'hasProLicense' => array(
+					'hasProLicense'  => array(
 						'type'        => 'boolean',
 						'description' => 'Does the site have an SEOPress Pro license',
 					),
-					'titlesMetas'   => array(
+					'titlesMetas'    => array(
 						'type' => 'SEOPressSettings_TitlesMetas',
+					),
+					'xmlHtmlSitemap' => array(
+						'type' => 'SEOPressSettings_XmlHtmlSitemap',
 					),
 				),
 			)
@@ -322,50 +434,84 @@ add_action(
 			array(
 				'type'    => 'SEOPressSettings',
 				'resolve' => function () {
-					$seopress_titles_option_name = get_option( 'seopress_titles_option_name' );
+					$seopress_titles_options = get_option( 'seopress_titles_option_name' );
 					$seopress_titles_settings = array(
-						'home_site_title'         => $seopress_titles_option_name['seopress_titles_home_site_title'],
-						'home_site_desc'          => $seopress_titles_option_name['seopress_titles_home_site_desc'],
-						'separator'               => $seopress_titles_option_name['seopress_titles_sep'],
+						'home_site_title'         => $seopress_titles_options['seopress_titles_home_site_title'],
+						'home_site_desc'          => $seopress_titles_options['seopress_titles_home_site_desc'],
+						'separator'               => $seopress_titles_options['seopress_titles_sep'],
 						'single_titles'           => array(
 							'post' => array(
-								'title'       => $seopress_titles_option_name['seopress_titles_single_titles']['post']['title'],
-								'description' => $seopress_titles_option_name['seopress_titles_single_titles']['post']['description'],
+								'title'       => $seopress_titles_options['seopress_titles_single_titles']['post']['title'],
+								'description' => $seopress_titles_options['seopress_titles_single_titles']['post']['description'],
 							),
 							'page' => array(
-								'title'       => $seopress_titles_option_name['seopress_titles_single_titles']['page']['title'],
-								'description' => $seopress_titles_option_name['seopress_titles_single_titles']['page']['description'],
+								'title'       => $seopress_titles_options['seopress_titles_single_titles']['page']['title'],
+								'description' => $seopress_titles_options['seopress_titles_single_titles']['page']['description'],
 							),
 						),
-						'archives_author_title'   => $seopress_titles_option_name['seopress_titles_archives_author_title'],
-						'archives_author_desc'    => $seopress_titles_option_name['seopress_titles_archives_author_desc'],
-						'archives_author_noindex' => $seopress_titles_option_name['seopress_titles_archives_author_noindex'] ? true : false,
-						'archives_author_disable' => $seopress_titles_option_name['seopress_titles_archives_author_disable'] ? true : false,
-						'archives_date_title'     => $seopress_titles_option_name['seopress_titles_archives_date_title'],
-						'archives_date_desc'      => $seopress_titles_option_name['seopress_titles_archives_date_desc'],
-						'archives_date_noindex'   => $seopress_titles_option_name['seopress_titles_archives_date_noindex'] ? true : false,
-						'archives_date_disable'   => $seopress_titles_option_name['seopress_titles_archives_date_disable'] ? true : false,
-						'archives_search_title'   => $seopress_titles_option_name['seopress_titles_archives_search_title'],
-						'archives_search_desc'    => $seopress_titles_option_name['seopress_titles_archives_search_desc'],
-						'archives_404_title'      => $seopress_titles_option_name['seopress_titles_archives_404_title'],
-						'archives_404_desc'       => $seopress_titles_option_name['seopress_titles_archives_404_desc'],
+						'archives_author_title'   => $seopress_titles_options['seopress_titles_archives_author_title'],
+						'archives_author_desc'    => $seopress_titles_options['seopress_titles_archives_author_desc'],
+						'archives_author_noindex' => $seopress_titles_options['seopress_titles_archives_author_noindex'] ? true : false,
+						'archives_author_disable' => $seopress_titles_options['seopress_titles_archives_author_disable'] ? true : false,
+						'archives_date_title'     => $seopress_titles_options['seopress_titles_archives_date_title'],
+						'archives_date_desc'      => $seopress_titles_options['seopress_titles_archives_date_desc'],
+						'archives_date_noindex'   => $seopress_titles_options['seopress_titles_archives_date_noindex'] ? true : false,
+						'archives_date_disable'   => $seopress_titles_options['seopress_titles_archives_date_disable'] ? true : false,
+						'archives_search_title'   => $seopress_titles_options['seopress_titles_archives_search_title'],
+						'archives_search_desc'    => $seopress_titles_options['seopress_titles_archives_search_desc'],
+						'archives_404_title'      => $seopress_titles_options['seopress_titles_archives_404_title'],
+						'archives_404_desc'       => $seopress_titles_options['seopress_titles_archives_404_desc'],
 						'tax_titles'              => array(
 							'category' => array(
-								'title'       => $seopress_titles_option_name['seopress_titles_tax_titles']['category']['title'],
-								'description' => $seopress_titles_option_name['seopress_titles_tax_titles']['category']['description'],
-								'noindex'     => $seopress_titles_option_name['seopress_titles_tax_titles']['category']['noindex'] ? true : false,
+								'title'       => $seopress_titles_options['seopress_titles_tax_titles']['category']['title'],
+								'description' => $seopress_titles_options['seopress_titles_tax_titles']['category']['description'],
+								'noindex'     => $seopress_titles_options['seopress_titles_tax_titles']['category']['noindex'] ? true : false,
 							),
 							'post_tag' => array(
-								'title'       => $seopress_titles_option_name['seopress_titles_tax_titles']['post_tag']['title'],
-								'description' => $seopress_titles_option_name['seopress_titles_tax_titles']['post_tag']['description'],
-								'noindex'     => $seopress_titles_option_name['seopress_titles_tax_titles']['post_tag']['noindex'] ? true : false,
+								'title'       => $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['title'],
+								'description' => $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['description'],
+								'noindex'     => $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['noindex'] ? true : false,
 							),
 						),
-						'paged_rel'               => $seopress_titles_option_name['seopress_titles_paged_rel'] ? true : false,
+						'paged_rel'               => $seopress_titles_options['seopress_titles_paged_rel'] ? true : false,
+					);
+					$seopress_xml_html_sitemap_options = get_option( 'seopress_xml_sitemap_option_name' );
+					$seopress_xml_html_sitemap_settings = array(
+						'xmlSitemapGeneralEnabled' => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_general_enable'] ? true : false,
+						'xmlSitemapImageEnabled'   => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_img_enable'] ? true : false,
+						'xmlSitemapVideoEnabled'   => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_video_enable'] ? true : false,
+						'xmlSitemapAuthorEnabled'  => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_author_enable'] ? true : false,
+						'xmlSitemapHTMLEnabled'    => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_enable'] ? true : false,
+						'sitemapPostTypes'         => array(
+							'post'       => array(
+								'include' => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_post_types_list']['post']['include'] ? true : false,
+							),
+							'page'       => array(
+								'include' => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_post_types_list']['page']['include'] ? true : false,
+							),
+							'attachment' => array(
+								'include' => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_post_types_list']['attachment']['include'] ? true : false,
+							),
+						),
+						'sitemapTaxonomies'        => array(
+							'category' => array(
+								'include' => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_taxonomies_list']['category']['include'] ? true : false,
+							),
+							'post_tag' => array(
+								'include' => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_taxonomies_list']['post_tag']['include'] ? true : false,
+							),
+						),
+						'htmlMapping'              => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_mapping'],
+						'htmlExclude'              => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_exclude'],
+						'htmlOrder'                => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_order'],
+						'htmlOrderby'              => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_orderby'],
+						'htmlDate'                 => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_date'] ? true : false,
+						'htmlArchiveLinks'         => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_archive_links'] ? true : false,
 					);
 					return array(
-						'hasProLicense' => get_option( 'seopress_pro_license_status' ) === 'valid',
-						'titlesMetas'   => $seopress_titles_settings,
+						'hasProLicense'  => get_option( 'seopress_pro_license_status' ) === 'valid',
+						'titlesMetas'    => $seopress_titles_settings,
+						'xmlHtmlSitemap' => $seopress_xml_html_sitemap_settings,
 					);
 				},
 			)
