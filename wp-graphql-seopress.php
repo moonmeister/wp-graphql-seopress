@@ -16,6 +16,8 @@
  * @package wp-graphql-seopress
  */
 
+namespace WPGraphQL\Extensions\SEOPress;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
@@ -28,6 +30,8 @@ add_action(
 	function () {
 		$post_types = \WPGraphQL::get_allowed_post_types();
 		$taxonomies = \WPGraphQL::get_allowed_taxonomies();
+
+		$has_pro_license = get_option( 'seopress_pro_license_status' ) === 'valid';
 
 		$seopress_object = array(
 			'description' => __( 'The SEOPress schema data', 'wp-graphql' ),
@@ -128,13 +132,13 @@ add_action(
 					'type'        => 'String',
 					'description' => 'Target keywords separated by commas.',
 				),
-				'hasProLicense'             => array(
+				'has_pro_license'           => array(
 					'type'        => 'Boolean',
 					'description' => 'Whether or not the site has a pro license.',
 				),
 			),
 		);
-		if ( get_option( 'seopress_pro_license_status' ) === 'valid' ) {
+		if ( $has_pro_license ) {
 			$seopress_object['fields']['proSchemas']       = array(
 				'type'        => 'String',
 				'description' => 'Array of Schemas',
@@ -146,6 +150,226 @@ add_action(
 		}
 
 		register_graphql_object_type( 'SEOPress', $seopress_object );
+
+		register_graphql_object_type(
+			'SEOPressSettings_TitleDescription',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'title'       => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+					'description' => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TitleDescriptionNoindex',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'title'       => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+					'description' => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+					'noindex'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_SingleTitles',
+			array(
+				'description' => 'Title and description format for posts and pages.',
+				'fields'      => array(
+					'post' => array(
+						'type' => 'SEOPressSettings_TitleDescription',
+					),
+					'page' => array(
+						'type' => 'SEOPressSettings_TitleDescription',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TaxTitles',
+			array(
+				'description' => 'Title and description format and whether should be marked as noindex for categories and taxonomies.',
+				'fields'      => array(
+					'category' => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindex',
+					),
+					'post_tag' => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindex',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TitlesMetas',
+			array(
+				'description' => __( 'Manage all your titles & metas for post types, taxonomies, archives...', 'wpgraphql_seopress' ),
+				'fields'      => array(
+					'home_site_title'         => array(
+						'type'        => 'String',
+						'description' => 'description 1',
+					),
+					'home_site_desc'          => array(
+						'type'        => 'String',
+						'description' => 'description 1',
+					),
+					'separator'               => array(
+						'type'        => 'String',
+						'description' => 'Use this separator with %%sep%% in your title and meta description.',
+					),
+					'single_titles'           => array(
+						'type'        => 'SEOPressSettings_SingleTitles',
+						'description' => 'Formats of titles for posts and pages.',
+					),
+					'archives_author_title'   => array(
+						'type'        => 'String',
+						'description' => 'Format of author archive title.',
+					),
+					'archives_author_desc'    => array(
+						'type'        => 'String',
+						'description' => 'Format of author archive description.',
+					),
+					'archives_author_noindex' => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included on author archive pages.',
+					),
+					'archives_author_disable' => array(
+						'type'        => 'Boolean',
+						'description' => 'Author archive pages should be disabled.',
+					),
+					'archives_date_title'     => array(
+						'type'        => 'String',
+						'description' => 'Format of archive date page titles.',
+					),
+					'archives_date_desc'      => array(
+						'type'        => 'String',
+						'description' => 'Format of archive date page descriptions.',
+					),
+					'archives_date_noindex'   => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included on archive date pages.',
+					),
+					'archives_date_disable'   => array(
+						'type'        => 'Boolean',
+						'description' => 'Archive date pages should be disabled.',
+					),
+					'archives_search_title'   => array(
+						'type'        => 'String',
+						'description' => 'Format of search page titles.',
+					),
+					'archives_search_desc'    => array(
+						'type'        => 'String',
+						'description' => 'Format of search page descriptions.',
+					),
+					'archives_404_title'      => array(
+						'type'        => 'String',
+						'description' => 'Format of 404 page titles.',
+					),
+					'archives_404_desc'       => array(
+						'type'        => 'String',
+						'description' => 'Format of 404 page descriptions.',
+					),
+					'tax_titles'              => array(
+						'type'        => 'SEOPressSettings_TaxTitles',
+						'description' => 'Taxonomy page settings.',
+					),
+					'paged_rel'               => array(
+						'type'        => 'Boolean',
+						'description' => 'Indicate paginated content to Google?',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings',
+			array(
+				'description' => 'All SEOPress admin settings pages.',
+				'fields'      => array(
+					'hasProLicense' => array(
+						'type' => 'boolean',
+						'description' => 'Does the site have an SEOPress Pro license',
+					),
+					'titlesMetas' => array(
+						'type' => 'SEOPressSettings_TitlesMetas',
+					),
+				),
+			)
+		);
+
+		register_graphql_field(
+			'RootQuery',
+			'seoPressSettings',
+			array(
+				'type'    => 'SEOPressSettings',
+				'resolve' => function () {
+					$seopress_titles_option_name = get_option( 'seopress_titles_option_name' );
+					$seopress_titles_settings = array(
+						'home_site_title'         => $seopress_titles_option_name['seopress_titles_home_site_title'],
+						'home_site_desc'          => $seopress_titles_option_name['seopress_titles_home_site_desc'],
+						'separator'               => $seopress_titles_option_name['seopress_titles_sep'],
+						'single_titles'           => array(
+							'post' => array(
+								'title'       => $seopress_titles_option_name['seopress_titles_single_titles']['post']['title'],
+								'description' => $seopress_titles_option_name['seopress_titles_single_titles']['post']['description'],
+							),
+							'page' => array(
+								'title'       => $seopress_titles_option_name['seopress_titles_single_titles']['page']['title'],
+								'description' => $seopress_titles_option_name['seopress_titles_single_titles']['page']['description'],
+							),
+						),
+						'archives_author_title'   => $seopress_titles_option_name['seopress_titles_archives_author_title'],
+						'archives_author_desc'    => $seopress_titles_option_name['seopress_titles_archives_author_desc'],
+						'archives_author_noindex' => $seopress_titles_option_name['seopress_titles_archives_author_noindex'] ? true : false,
+						'archives_author_disable' => $seopress_titles_option_name['seopress_titles_archives_author_disable'] ? true : false,
+						'archives_date_title'     => $seopress_titles_option_name['seopress_titles_archives_date_title'],
+						'archives_date_desc'      => $seopress_titles_option_name['seopress_titles_archives_date_desc'],
+						'archives_date_noindex'   => $seopress_titles_option_name['seopress_titles_archives_date_noindex'] ? true : false,
+						'archives_date_disable'   => $seopress_titles_option_name['seopress_titles_archives_date_disable'] ? true : false,
+						'archives_search_title'   => $seopress_titles_option_name['seopress_titles_archives_search_title'],
+						'archives_search_desc'    => $seopress_titles_option_name['seopress_titles_archives_search_desc'],
+						'archives_404_title'      => $seopress_titles_option_name['seopress_titles_archives_404_title'],
+						'archives_404_desc'       => $seopress_titles_option_name['seopress_titles_archives_404_desc'],
+						'tax_titles'              => array(
+							'category' => array(
+								'title'       => $seopress_titles_option_name['seopress_titles_tax_titles']['category']['title'],
+								'description' => $seopress_titles_option_name['seopress_titles_tax_titles']['category']['description'],
+								'noindex'     => $seopress_titles_option_name['seopress_titles_tax_titles']['category']['noindex'] ? true : false,
+							),
+							'post_tag' => array(
+								'title'       => $seopress_titles_option_name['seopress_titles_tax_titles']['post_tag']['title'],
+								'description' => $seopress_titles_option_name['seopress_titles_tax_titles']['post_tag']['description'],
+								'noindex'     => $seopress_titles_option_name['seopress_titles_tax_titles']['post_tag']['noindex'] ? true : false,
+							),
+						),
+						'paged_rel'               => $seopress_titles_option_name['seopress_titles_paged_rel'] ? true : false,
+					);
+					return array(
+						'hasProLicense' => get_option( 'seopress_pro_license_status' ) === 'valid',
+						'titlesMetas' => $seopress_titles_settings,
+					);
+				},
+			)
+		);
 
 		if ( ! empty( $post_types ) && is_array( $post_types ) ) {
 			foreach ( $post_types as $post_type ) {
@@ -193,9 +417,9 @@ add_action(
 								if ( get_option( 'seopress_pro_license_status' ) === 'valid' ) {
 									$seo['proSchemas'] = wp_json_encode( get_post_meta( $post->ID, '_seopress_pro_schemas', true ) );
 									$seo['proSchemasManual'] = wp_json_encode( get_post_meta( $post->ID, '_seopress_pro_schemas_manual', true ) );
-									$seo['hasProLicense'] = true;
+									$seo['has_pro_license'] = true;
 								} else {
-									$seo['hasProLicense'] = false;
+									$seo['has_pro_license'] = false;
 								}
 
 								return ! empty( $seo ) ? $seo : null;
@@ -250,9 +474,9 @@ add_action(
 								if ( get_option( 'seopress_pro_license_status' ) === 'valid' ) {
 									$seo['proSchemas'] = wp_json_encode( get_post_meta( $term->ID, '_seopress_pro_schemas', true ) );
 									$seo['proSchemasManual'] = wp_json_encode( get_post_meta( $term->ID, '_seopress_pro_schemas_manual', true ) );
-									$seo['hasProLicense'] = true;
+									$seo['has_pro_license'] = true;
 								} else {
-									$seo['hasProLicense'] = false;
+									$seo['has_pro_license'] = false;
 								}
 
 								return ! empty( $seo ) ? $seo : null;
