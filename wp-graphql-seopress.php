@@ -281,6 +281,10 @@ add_action(
 						'type'        => 'String',
 						'description' => 'Format of search page descriptions.',
 					),
+					'archives_search_noindex' => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included on archive date pages.',
+					),
 					'archives_404_title'      => array(
 						'type'        => 'String',
 						'description' => 'Format of 404 page titles.',
@@ -293,9 +297,45 @@ add_action(
 						'type'        => 'SEOPressSettings_TaxTitles',
 						'description' => 'Taxonomy page settings.',
 					),
+					'noindex'                 => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included on entire site.',
+					),
+					'nofollow'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Nofollow tag should be included on entire site.',
+					),
+					'noodp'                   => array(
+						'type'        => 'Boolean',
+						'description' => 'Do not use Open Directory Project metadata on any pages.',
+					),
+					'noimageindex'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Noimageindex tag should be included on entire site.',
+					),
+					'noarchive'               => array(
+						'type'        => 'Boolean',
+						'description' => 'Noarchive tag should be included on entire site.',
+					),
+					'nosnippet'               => array(
+						'type'        => 'Boolean',
+						'description' => 'Nosnippet tag should be included on entire site.',
+					),
+					'nositelinkssearchbox'    => array(
+						'type'        => 'Boolean',
+						'description' => 'Nositelinkssearchbox tag should be included on entire site.',
+					),
 					'paged_rel'               => array(
 						'type'        => 'Boolean',
 						'description' => 'Indicate paginated content to Google?',
+					),
+					'paged_noindex'           => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included on paginated pages.',
+					),
+					'attachments_noindex'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included on attachment pages.',
 					),
 				),
 			)
@@ -459,6 +499,7 @@ add_action(
 						'archives_date_disable'   => $seopress_titles_options['seopress_titles_archives_date_disable'] ? true : false,
 						'archives_search_title'   => $seopress_titles_options['seopress_titles_archives_search_title'],
 						'archives_search_desc'    => $seopress_titles_options['seopress_titles_archives_search_desc'],
+						'archives_search_noindex' => $seopress_titles_options['seopress_titles_archives_search_title_noindex'] ? true : false,
 						'archives_404_title'      => $seopress_titles_options['seopress_titles_archives_404_title'],
 						'archives_404_desc'       => $seopress_titles_options['seopress_titles_archives_404_desc'],
 						'tax_titles'              => array(
@@ -473,7 +514,16 @@ add_action(
 								'noindex'     => $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['noindex'] ? true : false,
 							),
 						),
+						'noindex'                 => $seopress_titles_options[''] ? true : false,
+						'nofollow'                => $seopress_titles_options[''] ? true : false,
+						'noodp'                   => $seopress_titles_options[''] ? true : false,
+						'noimageindex'            => $seopress_titles_options[''] ? true : false,
+						'noarchive'               => $seopress_titles_options[''] ? true : false,
+						'nosnippet'               => $seopress_titles_options[''] ? true : false,
+						'nositelinkssearchbox'    => $seopress_titles_options[''] ? true : false,
 						'paged_rel'               => $seopress_titles_options['seopress_titles_paged_rel'] ? true : false,
+						'paged_noindex'           => $seopress_titles_options[''] ? true : false,
+						'attachments_noindex'     => $seopress_titles_options[''] ? true : false,
 					);
 					$seopress_xml_html_sitemap_options = get_option( 'seopress_xml_sitemap_option_name' );
 					$seopress_xml_html_sitemap_settings = array(
