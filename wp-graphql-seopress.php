@@ -306,10 +306,10 @@ add_action(
 				'description' => 'All SEOPress admin settings pages.',
 				'fields'      => array(
 					'hasProLicense' => array(
-						'type' => 'boolean',
+						'type'        => 'boolean',
 						'description' => 'Does the site have an SEOPress Pro license',
 					),
-					'titlesMetas' => array(
+					'titlesMetas'   => array(
 						'type' => 'SEOPressSettings_TitlesMetas',
 					),
 				),
@@ -365,7 +365,7 @@ add_action(
 					);
 					return array(
 						'hasProLicense' => get_option( 'seopress_pro_license_status' ) === 'valid',
-						'titlesMetas' => $seopress_titles_settings,
+						'titlesMetas'   => $seopress_titles_settings,
 					);
 				},
 			)
