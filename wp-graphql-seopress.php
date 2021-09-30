@@ -852,6 +852,285 @@ add_action(
 			)
 		);
 
+		// Advanced Settings.
+		register_graphql_object_type(
+			'SEOPressSettings_AdvancedUserEnable',
+			array(
+				'description' => 'Set Permissions Options for Users',
+				'fields'      => array(
+					'administrator' => array(
+						'type'        => 'Boolean',
+						'description' => 'True if enabled.',
+					),
+					'editor'        => array(
+						'type'        => 'Boolean',
+						'description' => 'True if enabled.',
+					),
+					'author'        => array(
+						'type'        => 'Boolean',
+						'description' => 'True if enabled.',
+					),
+					'contributor'   => array(
+						'type'        => 'Boolean',
+						'description' => 'True if enabled.',
+					),
+					'subscriber'    => array(
+						'type'        => 'Boolean',
+						'description' => 'True if enabled.',
+					),
+					'customer'      => array(
+						'type'        => 'Boolean',
+						'description' => 'True if enabled.',
+					),
+					'shop_manager'  => array(
+						'type'        => 'Boolean',
+						'description' => 'True if enabled.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_Advanced',
+			array(
+				'description' => 'SEOPress Advanced settings pages.',
+				'fields'      => array(
+					'redirectAttachmentPagesToParent'      => array(
+						'type'        => 'Boolean',
+						'description' => 'Redirect attachment pages to post parent',
+					),
+					'redirectAttachmentPagesToFile'        => array(
+						'type'        => 'Boolean',
+						'description' => 'Redirect attachment pages to their file URL',
+					),
+					'removeReplytocom'                     => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove ?replytocom link to avoid duplicate content',
+					),
+					'automaticImageTitle'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Automatically set the image Title',
+					),
+					'automaticImageAltText'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Automatically set the image Alt text',
+					),
+					'automaticImageAltTextFromKeywords'    => array(
+						'type'        => 'Boolean',
+						'description' => 'Automatically set the image Alt text from target keywords',
+					),
+					'automaticImageCaption'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Automatically set the image Caption',
+					),
+					'automaticImageDescription'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Automatically set the image Description',
+					),
+					'addEditorToTaxonomy'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Add WP Editor to taxonomy description textarea',
+					),
+					'removeCategoryInUrl'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove `/category/` in URL',
+					),
+					'removeProductCategoryInUrl'           => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove `/product-category/` in URL',
+					),
+					'removeTrailingSlashMetas'             => array(
+						'type'        => 'Boolean',
+						'description' => 'Disable trailing slash for metas',
+					),
+					'removeGeneratorMeta'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove WordPress generator meta tag',
+					),
+					'removeHentryPostClass'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove hentry post class',
+					),
+					'removeCommentAuthorUrl'               => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove author URL',
+					),
+					'removeCommentFormWebsiteInput'        => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove website field in comment form',
+					),
+					'removeShortlinkMeta'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove WordPress shortlink meta tag',
+					),
+					'removeWindowsLiveWriterMeta'          => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove Windows Live Writer meta tag',
+					),
+					'removeReallySimpleDiscoveryMeta'      => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove RSD meta tag',
+					),
+					'addSiteVerificationGoogle'            => array(
+						'type'        => 'String',
+						'description' => 'Google site verification string',
+					),
+					'addSiteVerificationBing'              => array(
+						'type'        => 'String',
+						'description' => 'Bing site verification string',
+					),
+					'addSiteVerificationPinterest'         => array(
+						'type'        => 'String',
+						'description' => 'Pinterest site verification string',
+					),
+					'addSiteVerificationYandex'            => array(
+						'type'        => 'String',
+						'description' => 'Yandex site verification string',
+					),
+					'removeSeoAdminBar'                    => array(
+						'type'        => 'Boolean',
+						'description' => 'SEO in admin bar',
+					),
+					'enableUniversalSeoMetabox'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Universal Metabox (Gutenberg)',
+					),
+					'removeUniversalSeoMetabox'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Disable Universal Metabox',
+					),
+					'removeNoindexFromAdminBar'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex in admin bar',
+					),
+					'metaboxSeoPosition'                   => array(
+						'type'        => 'String',
+						'description' => 'SEO metabox\'s position',
+					),
+					'metaboxStructuredDataDefaultTab'      => array(
+						'type'        => 'String',
+						'description' => 'Default tab for Structured data metabox',
+					),
+					'removeNotificationCenter'             => array(
+						'type'        => 'Boolean',
+						'description' => 'Hide Notifications Center',
+					),
+					'removeSeoNews'                        => array(
+						'type'        => 'Boolean',
+						'description' => 'Hide SEO News in SEO Dashboard Page',
+					),
+					'removeSeoTools'                       => array(
+						'type'        => 'Boolean',
+						'description' => 'Hide SEO tools in SEO Dashboard Page',
+					),
+					'enableTitleTagColumn'                 => array(
+						'type'        => 'Boolean',
+						'description' => 'Show Title tag column in post types',
+					),
+					'enableMetaDescriptionColumn'          => array(
+						'type'        => 'Boolean',
+						'description' => 'Show Meta description column in post types',
+					),
+					'enableRedirectionEnableColumn'        => array(
+						'type'        => 'Boolean',
+						'description' => 'Show Redirection Enable column in post types',
+					),
+					'enableRedirectUrlColumn'              => array(
+						'type'        => 'Boolean',
+						'description' => 'Show Redirect URL column in post types',
+					),
+					'enableCanonicalUrlColumn'             => array(
+						'type'        => 'Boolean',
+						'description' => 'Show canonical URL column in post types',
+					),
+					'enableTargetKeywordColumn'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Show Target Keyword column in post types',
+					),
+					'enableNoindexColumn'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Show noindex column in post types',
+					),
+					'enableNofollowColumn'                 => array(
+						'type'        => 'Boolean',
+						'description' => 'Show nofollow column in post types',
+					),
+					'enableTotalWordsColumn'               => array(
+						'type'        => 'Boolean',
+						'description' => 'Show total number of words column in post types',
+					),
+					'enablePageSpeedColumn'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Show Google Page Speed column in post types',
+					),
+					'enableContentAnalysisScoreColumn'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Show content analysis score column in post types',
+					),
+					'removeContentAnalysisMetabox'         => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove Content Analysis Metabox',
+					),
+					'removeGenesisSeoMetabox'              => array(
+						'type'        => 'Boolean',
+						'description' => 'Hide Genesis SEO Metabox',
+					),
+					'removeGenesisSeoFromAdminBar'         => array(
+						'type'        => 'Boolean',
+						'description' => 'Hide Genesis SEO Settings link',
+					),
+					'removeAdviceStructuredDataMetabox'    => array(
+						'type'        => 'Boolean',
+						'description' => 'Hide advice in Structured Data Types metabox',
+					),
+					'permissionStructuredDataTypesMetabox' => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Block access to Structured Data Types metaboxes in editor.',
+					),
+					'permissionMetaboxSEO'                 => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Block access to SEO metaboxes in editor.',
+					),
+					'permissionMetaboxContentAnalysis'     => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Block access to Content Analysis metaboxes in editor.',
+					),
+					'permissionTitlesMetasPageSettings'    => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access Titles & Metas settings page.',
+					),
+					'permissionXmlHtmlSitemapPageSettings' => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access XML - HTML Sitemap settings page.',
+					),
+					'permissionSocialNetworksPageSettings' => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access Social Networks settings page.',
+					),
+					'permissionAnalyticsPageSettings'      => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access Analytics settings page.',
+					),
+					'permissionAdvancedPageSettings'       => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access Advanced settings page.',
+					),
+					'permissionToolsPageSettings'          => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access Tools settings page.',
+					),
+					'permissionProPageSettings'            => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access PRO settings page.',
+					),
+					'permissionBotPageSettings'            => array(
+						'type'        => 'SEOPressSettings_AdvancedUserEnable',
+						'description' => 'Which user roles are allowed to access BOT settings page.',
+					),
+				),
+			)
+		);
+
 		// Object that includes all settings pages.
 		register_graphql_object_type(
 			'SEOPressSettings',
@@ -873,6 +1152,9 @@ add_action(
 					),
 					'analytics'      => array(
 						'type' => 'SEOPressSettings_Analytics',
+					),
+					'advanced'       => array(
+						'type' => 'SEOPressSettings_Advanced',
 					),
 				),
 			)
@@ -1069,12 +1351,154 @@ add_action(
 						'matomoLinkDownloadTracking'       => (bool) $seopress_google_analytics_options['seopress_google_analytics_matomo_link_tracking'],
 						'matomoNoHeatmaps'                 => (bool) $seopress_google_analytics_options['seopress_google_analytics_matomo_no_heatmaps'],
 					);
+					$seopress_advanced_options = get_option( 'seopress_advanced_option_name' );
+					$seopress_advanced_settings = array(
+						'redirectAttachmentPagesToParent'  => (bool) $seopress_advanced_options['seopress_advanced_advanced_attachments'],
+						'redirectAttachmentPagesToFile'    => (bool) $seopress_advanced_options['seopress_advanced_advanced_attachments_file'],
+						'removeReplytocom'                 => (bool) $seopress_advanced_options['seopress_advanced_advanced_replytocom'],
+						'automaticImageTitle'              => (bool) $seopress_advanced_options['seopress_advanced_advanced_image_auto_title_editor'],
+						'automaticImageAltText'            => (bool) $seopress_advanced_options['seopress_advanced_advanced_image_auto_alt_editor'],
+						'automaticImageAltTextFromKeywords' => (bool) $seopress_advanced_options['seopress_advanced_advanced_image_auto_alt_target_kw'],
+						'automaticImageCaption'            => (bool) $seopress_advanced_options['seopress_advanced_advanced_image_auto_caption_editor'],
+						'automaticImageDescription'        => (bool) $seopress_advanced_options['seopress_advanced_advanced_image_auto_desc_editor'],
+						'addEditorToTaxonomy'              => (bool) $seopress_advanced_options['seopress_advanced_advanced_tax_desc_editor'],
+						'removeCategoryInUrl'              => (bool) $seopress_advanced_options['seopress_advanced_advanced_category_url'],
+						'removeProductCategoryInUrl'       => (bool) $seopress_advanced_options['seopress_advanced_advanced_product_cat_url'],
+						'removeTrailingSlashMetas'         => (bool) $seopress_advanced_options['seopress_advanced_advanced_trailingslash'],
+						'removeGeneratorMeta'              => (bool) $seopress_advanced_options['seopress_advanced_advanced_wp_generator'],
+						'removeHentryPostClass'            => (bool) $seopress_advanced_options['seopress_advanced_advanced_hentry'],
+						'removeCommentAuthorUrl'           => (bool) $seopress_advanced_options['seopress_advanced_advanced_comments_author_url'],
+						'removeCommentFormWebsiteInput'    => (bool) $seopress_advanced_options['seopress_advanced_advanced_comments_website'],
+						'removeShortlinkMeta'              => (bool) $seopress_advanced_options['seopress_advanced_advanced_wp_shortlink'],
+						'removeWindowsLiveWriterMeta'      => (bool) $seopress_advanced_options['seopress_advanced_advanced_wp_wlw'],
+						'removeReallySimpleDiscoveryMeta'  => (bool) $seopress_advanced_options['seopress_advanced_advanced_wp_rsd'],
+						'addSiteVerificationGoogle'        => $seopress_advanced_options['seopress_advanced_advanced_google'],
+						'addSiteVerificationBing'          => $seopress_advanced_options['seopress_advanced_advanced_bing'],
+						'addSiteVerificationPinterest'     => $seopress_advanced_options['seopress_advanced_advanced_pinterest'],
+						'addSiteVerificationYandex'        => $seopress_advanced_options['seopress_advanced_advanced_yandex'],
+						'removeSeoAdminBar'                => (bool) $seopress_advanced_options['seopress_advanced_appearance_adminbar'],
+						'enableUniversalSeoMetabox'        => (bool) $seopress_advanced_options['seopress_advanced_appearance_universal_metabox'],
+						'removeUniversalSeoMetabox'        => (bool) $seopress_advanced_options['seopress_advanced_appearance_universal_metabox_disable'],
+						'removeNoindexFromAdminBar'        => (bool) $seopress_advanced_options['seopress_advanced_appearance_adminbar_noindex'],
+						'metaboxSeoPosition'               => $seopress_advanced_options['seopress_advanced_appearance_metaboxe_position'],
+						'metaboxStructuredDataDefaultTab'  => $seopress_advanced_options['seopress_advanced_appearance_schema_default_tab'],
+						'removeNotificationCenter'         => (bool) $seopress_advanced_options['seopress_advanced_appearance_notifications'],
+						'removeSeoNews'                    => (bool) $seopress_advanced_options['seopress_advanced_appearance_news'],
+						'removeSeoTools'                   => (bool) $seopress_advanced_options['seopress_advanced_appearance_seo_tools'],
+						'enableTitleTagColumn'             => (bool) $seopress_advanced_options['seopress_advanced_appearance_title_col'],
+						'enableMetaDescriptionColumn'      => (bool) $seopress_advanced_options['seopress_advanced_appearance_meta_desc_col'],
+						'enableRedirectionEnableColumn'    => (bool) $seopress_advanced_options['seopress_advanced_appearance_redirect_enable_col'],
+						'enableRedirectUrlColumn'          => (bool) $seopress_advanced_options['seopress_advanced_appearance_redirect_url_col'],
+						'enableCanonicalUrlColumn'         => (bool) $seopress_advanced_options['seopress_advanced_appearance_canonical'],
+						'enableTargetKeywordColumn'        => (bool) $seopress_advanced_options['seopress_advanced_appearance_target_kw_col'],
+						'enableNoindexColumn'              => (bool) $seopress_advanced_options['seopress_advanced_appearance_noindex_col'],
+						'enableNofollowColumn'             => (bool) $seopress_advanced_options['seopress_advanced_appearance_nofollow_col'],
+						'enableTotalWordsColumn'           => (bool) $seopress_advanced_options['seopress_advanced_appearance_words_col'],
+						'enablePageSpeedColumn'            => (bool) $seopress_advanced_options['seopress_advanced_appearance_ps_col'],
+						'enableContentAnalysisScoreColumn' => (bool) $seopress_advanced_options['seopress_advanced_appearance_score_col'],
+						'removeContentAnalysisMetabox'     => (bool) $seopress_advanced_options['seopress_advanced_appearance_ca_metaboxe'],
+						'removeGenesisSeoMetabox'          => (bool) $seopress_advanced_options['seopress_advanced_appearance_genesis_seo_metaboxe'],
+						'removeGenesisSeoFromAdminBar'     => (bool) $seopress_advanced_options['seopress_advanced_appearance_genesis_seo_menu'],
+						'removeAdviceStructuredDataMetabox' => (bool) $seopress_advanced_options['seopress_advanced_appearance_advice_schema'],
+						'permissionStructuredDataTypesMetabox' => array(
+							'administrator' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_sdt_role']['administrator'],
+							'editor'        => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_sdt_role']['editor'],
+							'author'        => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_sdt_role']['author'],
+							'contributor'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_sdt_role']['contributor'],
+							'subscriber'    => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_sdt_role']['subscriber'],
+							'customer'      => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_sdt_role']['customer'],
+							'shop_manager'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_sdt_role']['shop_manager'],
+						),
+						'permissionMetaboxSEO'             => array(
+							'administrator' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_role']['administrator'],
+							'editor'        => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_role']['editor'],
+							'author'        => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_role']['author'],
+							'contributor'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_role']['contributor'],
+							'subscriber'    => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_role']['subscriber'],
+							'customer'      => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_role']['customer'],
+							'shop_manager'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_role']['shop_manager'],
+						),
+						'permissionMetaboxContentAnalysis' => array(
+							'administrator' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_ca_role']['administrator'],
+							'editor'        => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_ca_role']['editor'],
+							'author'        => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_ca_role']['author'],
+							'contributor'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_ca_role']['contributor'],
+							'subscriber'    => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_ca_role']['subscriber'],
+							'customer'      => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_ca_role']['customer'],
+							'shop_manager'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_ca_role']['shop_manager'],
+						),
+						'permissionTitlesMetasPageSettings' => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-titles']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-titles']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-titles']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-titles']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-titles']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-titles']['shop_manager'],
+						),
+						'permissionXmlHtmlSitemapPageSettings' => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-xml-sitemap']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-xml-sitemap']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-xml-sitemap']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-xml-sitemap']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-xml-sitemap']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-xml-sitemap']['shop_manager'],
+						),
+						'permissionSocialNetworksPageSettings' => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-social']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-social']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-social']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-social']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-social']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-social']['shop_manager'],
+						),
+						'permissionAnalyticsPageSettings'  => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-google-analytics']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-google-analytics']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-google-analytics']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-google-analytics']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-google-analytics']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-google-analytics']['shop_manager'],
+						),
+						'permissionAdvancedPageSettings'   => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-advanced']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-advanced']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-advanced']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-advanced']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-advanced']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-advanced']['shop_manager'],
+						),
+						'permissionToolsPageSettings'      => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-import-export']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-import-export']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-import-export']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-import-export']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-import-export']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-import-export']['shop_manager'],
+						),
+						'permissionProPageSettings'        => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-pro-page']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-pro-page']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-pro-page']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-pro-page']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-pro-page']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-pro-page']['shop_manager'],
+						),
+						'permissionBotPageSettings'        => array(
+							'editor'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-bot-batch']['editor'],
+							'author'       => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-bot-batch']['author'],
+							'contributor'  => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-bot-batch']['contributor'],
+							'subscriber'   => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-bot-batch']['subscriber'],
+							'customer'     => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-bot-batch']['customer'],
+							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-bot-batch']['shop_manager'],
+						),
+					);
 					return array(
 						'hasProLicense'  => get_option( 'seopress_pro_license_status' ) === 'valid',
 						'titlesMetas'    => $seopress_titles_settings,
 						'xmlHtmlSitemap' => $seopress_xml_html_sitemap_settings,
 						'social'         => $seopress_social_network_settings,
 						'analytics'      => $seopress_google_analytics_settings,
+						'advanced'       => $seopress_advanced_settings,
 					);
 				},
 			)
