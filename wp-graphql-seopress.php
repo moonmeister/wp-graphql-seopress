@@ -1277,6 +1277,36 @@ add_action(
 			)
 		);
 
+		// Tools Settings.
+		register_graphql_object_type(
+			'SEOPressSettings_Tools',
+			array(
+				'description' => 'SEOPress Tools settings pages.',
+				'fields'      => array(
+					'compatibilityOxygen'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Is compatibility for Oxygen Builder enabled.',
+					),
+					'compatibilityDivi'       => array(
+						'type'        => 'Boolean',
+						'description' => 'Is compatibility for Divi Builder enabled.',
+					),
+					'compatibilityWpBakery'   => array(
+						'type'        => 'Boolean',
+						'description' => 'Is compatibility for WP Bakery enabled.',
+					),
+					'compatibilityAviaLayout' => array(
+						'type'        => 'Boolean',
+						'description' => 'Is compatibility for Avia Layout Builder enabled.',
+					),
+					'compatibilityFusion'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Is compatibility for Fusion Builder enabled.',
+					),
+				),
+			)
+		);
+
 		// Object that includes all settings pages.
 		register_graphql_object_type(
 			'SEOPressSettings',
@@ -1301,6 +1331,9 @@ add_action(
 					),
 					'advanced'       => array(
 						'type' => 'SEOPressSettings_Advanced',
+					),
+					'tools'          => array(
+						'type' => 'SEOPressSettings_Tools',
 					),
 				),
 			)
@@ -1696,6 +1729,14 @@ add_action(
 							'shop_manager' => (bool) $seopress_advanced_options['seopress_advanced_security_metaboxe_seopress-bot-batch']['shop_manager'],
 						),
 					);
+					$seopress_tools_option = get_option( 'seopress_tools_option_name' );
+					$seopress_tools_settings = array(
+						'compatibilityOxygen'     => (bool) $seopress_tools_option['seopress_setting_section_tools_compatibility_oxygen'],
+						'compatibilityDivi'       => (bool) $seopress_tools_option['seopress_setting_section_tools_compatibility_divi'],
+						'compatibilityWpBakery'   => (bool) $seopress_tools_option['seopress_setting_section_tools_compatibility_bakery'],
+						'compatibilityAviaLayout' => (bool) $seopress_tools_option['seopress_setting_section_tools_compatibility_avia'],
+						'compatibilityFusion'     => (bool) $seopress_tools_option['seopress_setting_section_tools_compatibility_fusion'],
+					);
 					return array(
 						'hasProLicense'  => get_option( 'seopress_pro_license_status' ) === 'valid',
 						'titlesMetas'    => $seopress_titles_settings,
@@ -1703,6 +1744,7 @@ add_action(
 						'social'         => $seopress_social_network_settings,
 						'analytics'      => $seopress_google_analytics_settings,
 						'advanced'       => $seopress_advanced_settings,
+						'tools'          => $seopress_tools_settings,
 					);
 				},
 			)
