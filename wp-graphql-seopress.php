@@ -222,7 +222,7 @@ add_action(
 		register_graphql_object_type(
 			'SEOPressSettings_TitlesMetas',
 			array(
-				'description' => __( 'Manage all your titles & metas for post types, taxonomies, archives...', 'wpgraphql_seopress' ),
+				'description' => __( 'SEOPress Titles and Metas settings pages.' ),
 				'fields'      => array(
 					'home_site_title'         => array(
 						'type'        => 'String',
@@ -390,7 +390,7 @@ add_action(
 		register_graphql_object_type(
 			'SEOPressSettings_XmlHtmlSitemap',
 			array(
-				'description' => 'All SEOPress admin settings pages.',
+				'description' => 'SEOPress XML - HTML Sitemap settings pages.',
 				'fields'      => array(
 					'xmlSitemapGeneralEnabled' => array(
 						'type'        => 'boolean',
@@ -452,7 +452,7 @@ add_action(
 		register_graphql_object_type(
 			'SEOPressSettings_SocialNetworks',
 			array(
-				'description' => 'All SEOPress admin settings pages.',
+				'description' => 'SEOPress Social Networks settings pages.',
 				'fields'      => array(
 					'knowledgeType'           => array(
 						'type'        => 'String',
@@ -579,7 +579,7 @@ add_action(
 		register_graphql_object_type(
 			'SEOPressSettings_Analytics',
 			array(
-				'description' => 'All SEOPress admin settings pages.',
+				'description' => 'SEOPress Analytics settings pages.',
 				'fields'      => array(
 					'googleAnalyticsEnable'                => array(
 						'type'        => 'Boolean',
