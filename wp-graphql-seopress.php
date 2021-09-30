@@ -450,95 +450,126 @@ add_action(
 
 		// Social Networks Settings.
 		register_graphql_object_type(
+			'SEOPressSettings_FacebookImgDefault',
+			array(
+				'description' => 'SEOPress Custom Post Type Default Facebook Images.',
+				'fields'      => array(
+					'url' => array(
+						'type'        => 'String',
+						'description' => 'Default image url',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_FacebookImgCustomPostTypes',
+			array(
+				'description' => 'SEOPress Custom Post Type Default Facebook Images.',
+				'fields'      => array(
+					'product' => array(
+						'type'        => 'SEOPressSettings_FacebookImgDefault',
+						'description' => 'Default image for the custom post type: `product`.',
+					),
+					// TODO: Dynamically generate this list based on all custom post types registered.
+				),
+			)
+		);
+
+		register_graphql_object_type(
 			'SEOPressSettings_SocialNetworks',
 			array(
 				'description' => 'SEOPress Social Networks settings pages.',
 				'fields'      => array(
-					'knowledgeType'           => array(
+					'knowledgeType'              => array(
 						'type'        => 'String',
 						'description' => 'The type of object for knowledge graph. (Ref: https://schema.org/Thing#subtypes)',
 					),
-					'knowledgeName'           => array(
+					'knowledgeName'              => array(
 						'type'        => 'String',
 						'description' => 'Name of knowledge graph object.',
 					),
-					'knowledgeImg'            => array(
+					'knowledgeImg'               => array(
 						'type'        => 'String',
 						'description' => 'Photo or logo for knowledge graph object.',
 					),
-					'knowledgePhone'          => array(
+					'knowledgePhone'             => array(
 						'type'        => 'String',
 						'description' => 'Organization phone number for knowledge graph (only for organizations).',
 					),
-					'knowledgeContactType'    => array(
+					'knowledgeContactType'       => array(
 						'type'        => 'String',
 						'description' => 'Contact type for knowledge graph (only for organizations). (Ref: https://schema.org/contactType)',
 					),
-					'knowledgeContactOption'  => array(
+					'knowledgeContactOption'     => array(
 						'type'        => 'String',
 						'description' => 'Contact option for knowledge graph (only for organizations). (Ref: https://schema.org/ContactPointOption)',
 					),
-					'accountFacebook'         => array(
+					'accountFacebook'            => array(
 						'type'        => 'String',
 						'description' => 'Facebook Page URL.',
 					),
-					'accountTwitter'          => array(
+					'accountTwitter'             => array(
 						'type'        => 'String',
 						'description' => 'Twitter Page URL.',
 					),
-					'accountPinterest'        => array(
+					'accountPinterest'           => array(
 						'type'        => 'String',
 						'description' => 'Pinterest Page URL.',
 					),
-					'accountInstagram'        => array(
+					'accountInstagram'           => array(
 						'type'        => 'String',
 						'description' => 'Instagram Page URL.',
 					),
-					'accountYoutube'          => array(
+					'accountYoutube'             => array(
 						'type'        => 'String',
 						'description' => 'YouTube Page URL.',
 					),
-					'accountLinkedIn'         => array(
+					'accountLinkedIn'            => array(
 						'type'        => 'String',
 						'description' => 'LinkedIn Page URL.',
 					),
-					'facebookOg'              => array(
+					'facebookOg'                 => array(
 						'type'        => 'Boolean',
 						'description' => 'Enable Open Graph Data.',
 					),
-					'facebookImg'             => array(
+					'facebookImg'                => array(
 						'type'        => 'String',
 						'description' => 'Default Image for Open Graph.',
 					),
-					'facebookImgDefault'      => array(
+					'facebookImgDefault'         => array(
 						'type'        => 'Boolean',
 						'description' => 'Use same image for all Open Graph tags.',
 					),
-					'facebookLinkOwnershipId' => array(
+					'facebookImgCustomPostTypes' => array(
+						'type'        => 'SEOPressSettings_FacebookImgCustomPostTypes',
+						'description' => 'Array of default facebook images all custom post types.',
+					),
+					'facebookLinkOwnershipId'    => array(
 						'type'        => 'String',
 						'description' => 'One or more Facebook Page IDs that are associated with a URL in order to enable link editing and instant article publishing. (Ref: https://www.facebook.com/help/1503421039731588)',
 					),
-					'facebookAdminId'         => array(
+					'facebookAdminId'            => array(
 						'type'        => 'String',
 						'description' => 'The ID (or comma-separated list for properties that can accept multiple IDs) of an app, person using the app, or Page Graph API object.',
 					),
-					'facebookAppId'           => array(
+					'facebookAppId'              => array(
 						'type'        => 'String',
 						'description' => 'The Facebook app ID of the site\'s app. In order to use Facebook Insights you must add the app ID to your page.',
 					),
-					'twitterCard'             => array(
+					'twitterCard'                => array(
 						'type'        => 'Boolean',
 						'description' => 'Enable Twitter card',
 					),
-					'twitterCardOg'           => array(
+					'twitterCardOg'              => array(
 						'type'        => 'Boolean',
 						'description' => 'Use Open Graph if no Twitter cards.',
 					),
-					'twitterCardImg'          => array(
+					'twitterCardImg'             => array(
 						'type'        => 'String',
 						'description' => 'Default Twitter card image,',
 					),
-					'twitterCardImgSize'      => array(
+					'twitterCardImgSize'         => array(
 						'type'        => 'String',
 						'description' => 'Image size for twitter cards.',
 					),
@@ -1260,28 +1291,33 @@ add_action(
 					);
 					$seopress_social_network_options = get_option( 'seopress_social_option_name' );
 					$seopress_social_network_settings = array(
-						'knowledgeType'           => $seopress_social_network_options['seopress_social_knowledge_type'],
-						'knowledgeName'           => $seopress_social_network_options['seopress_social_knowledge_name'],
-						'knowledgeImg'            => $seopress_social_network_options['seopress_social_knowledge_img'],
-						'knowledgePhone'          => $seopress_social_network_options['seopress_social_knowledge_phone'],
-						'knowledgeContactType'    => $seopress_social_network_options['seopress_social_knowledge_contact_type'],
-						'knowledgeContactOption'  => $seopress_social_network_options['seopress_social_knowledge_contact_option'],
-						'accountFacebook'         => $seopress_social_network_options['seopress_social_accounts_facebook'],
-						'accountTwitter'          => $seopress_social_network_options['seopress_social_accounts_twitter'],
-						'accountPinterest'        => $seopress_social_network_options['seopress_social_accounts_pinterest'],
-						'accountInstagram'        => $seopress_social_network_options['seopress_social_accounts_instagram'],
-						'accountYoutube'          => $seopress_social_network_options['seopress_social_accounts_youtube'],
-						'accountLinkedIn'         => $seopress_social_network_options['seopress_social_accounts_linkedin'],
-						'facebookOg'              => (bool) $seopress_social_network_options['seopress_social_facebook_og'],
-						'facebookImg'             => $seopress_social_network_options['seopress_social_facebook_img'],
-						'facebookImgDefault'      => (bool) $seopress_social_network_options['seopress_social_facebook_img_default'],
-						'facebookLinkOwnershipId' => $seopress_social_network_options['seopress_social_facebook_link_ownership_id'],
-						'facebookAdminId'         => $seopress_social_network_options['seopress_social_facebook_admin_id'],
-						'facebookAppId'           => $seopress_social_network_options['seopress_social_facebook_app_id'],
-						'twitterCard'             => (bool) $seopress_social_network_options['seopress_social_twitter_card'],
-						'twitterCardOg'           => (bool) $seopress_social_network_options['seopress_social_twitter_card_og'],
-						'twitterCardImg'          => $seopress_social_network_options['seopress_social_twitter_card_img'],
-						'twitterCardImgSize'      => $seopress_social_network_options['seopress_social_twitter_card_img_size'],
+						'knowledgeType'              => $seopress_social_network_options['seopress_social_knowledge_type'],
+						'knowledgeName'              => $seopress_social_network_options['seopress_social_knowledge_name'],
+						'knowledgeImg'               => $seopress_social_network_options['seopress_social_knowledge_img'],
+						'knowledgePhone'             => $seopress_social_network_options['seopress_social_knowledge_phone'],
+						'knowledgeContactType'       => $seopress_social_network_options['seopress_social_knowledge_contact_type'],
+						'knowledgeContactOption'     => $seopress_social_network_options['seopress_social_knowledge_contact_option'],
+						'accountFacebook'            => $seopress_social_network_options['seopress_social_accounts_facebook'],
+						'accountTwitter'             => $seopress_social_network_options['seopress_social_accounts_twitter'],
+						'accountPinterest'           => $seopress_social_network_options['seopress_social_accounts_pinterest'],
+						'accountInstagram'           => $seopress_social_network_options['seopress_social_accounts_instagram'],
+						'accountYoutube'             => $seopress_social_network_options['seopress_social_accounts_youtube'],
+						'accountLinkedIn'            => $seopress_social_network_options['seopress_social_accounts_linkedin'],
+						'facebookOg'                 => (bool) $seopress_social_network_options['seopress_social_facebook_og'],
+						'facebookImg'                => $seopress_social_network_options['seopress_social_facebook_img'],
+						'facebookImgDefault'         => (bool) $seopress_social_network_options['seopress_social_facebook_img_default'],
+						'facebookImgCustomPostTypes' => array(
+							'product' => array(
+								'url' => $seopress_social_network_options['seopress_social_facebook_img_cpt']['product']['url'],
+							),
+						),
+						'facebookLinkOwnershipId'    => $seopress_social_network_options['seopress_social_facebook_link_ownership_id'],
+						'facebookAdminId'            => $seopress_social_network_options['seopress_social_facebook_admin_id'],
+						'facebookAppId'              => $seopress_social_network_options['seopress_social_facebook_app_id'],
+						'twitterCard'                => (bool) $seopress_social_network_options['seopress_social_twitter_card'],
+						'twitterCardOg'              => (bool) $seopress_social_network_options['seopress_social_twitter_card_og'],
+						'twitterCardImg'             => $seopress_social_network_options['seopress_social_twitter_card_img'],
+						'twitterCardImgSize'         => $seopress_social_network_options['seopress_social_twitter_card_img_size'],
 					);
 					$seopress_google_analytics_options = get_option( 'seopress_google_analytics_option_name' );
 					$seopress_google_analytics_settings = array(
