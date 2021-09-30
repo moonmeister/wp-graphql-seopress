@@ -185,6 +185,72 @@ add_action(
 						'type'        => 'Boolean',
 						'description' => 'Noindex tag should be included.',
 					),
+					'nofollow'    => array(
+						'type'        => 'Boolean',
+						'description' => 'Nofollow tag should be included.',
+					),
+					'date'        => array(
+						'type'        => 'Boolean',
+						'description' => '', // TODO: Find out what this is.
+					),
+					'thumb_gcs'   => array(
+						'type'        => 'Boolean',
+						'description' => '', // TODO: Find out what this is.
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TitleDescriptionNoindexNofollow',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'title'       => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+					'description' => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+					'noindex'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included.',
+					),
+					'nofollow'    => array(
+						'type'        => 'Boolean',
+						'description' => 'Nofollow tag should be included.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_TitleDescriptionNoindexNofollowDisable',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'disable'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Should SEO metaboxes be disabled for this Taxonomy.',
+					),
+					'title'       => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+					'description' => array(
+						'type'        => 'String',
+						'description' => 'The default title format.',
+					),
+					'noindex'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Noindex tag should be included.',
+					),
+					'nofollow'    => array(
+						'type'        => 'Boolean',
+						'description' => 'Nofollow tag should be included.',
+					),
 				),
 			)
 		);
@@ -194,12 +260,16 @@ add_action(
 			array(
 				'description' => 'Title and description format for posts and pages.',
 				'fields'      => array(
-					'post' => array(
-						'type' => 'SEOPressSettings_TitleDescription',
+					'post'    => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindex',
 					),
-					'page' => array(
-						'type' => 'SEOPressSettings_TitleDescription',
+					'page'    => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindex',
 					),
+					'product' => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindex',
+					),
+					// TODO: Dynamically generate this list based on all custom post types registered.
 				),
 			)
 		);
@@ -209,12 +279,32 @@ add_action(
 			array(
 				'description' => 'Title and description format and whether should be marked as noindex for categories and taxonomies.',
 				'fields'      => array(
-					'category' => array(
-						'type' => 'SEOPressSettings_TitleDescriptionNoindex',
+					'category'        => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindexNofollowDisable',
 					),
-					'post_tag' => array(
-						'type' => 'SEOPressSettings_TitleDescriptionNoindex',
+					'post_tag'        => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindexNofollowDisable',
 					),
+					'productCategory' => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindexNofollowDisable',
+					),
+					'productTag'      => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindexNofollowDisable',
+					),
+					// TODO: Dynamically generate this list based on all custom taxonomies registered.
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_ArchiveTitles',
+			array(
+				'description' => 'Title and description format and whether should be marked as noindex for categories and taxonomies.',
+				'fields'      => array(
+					'product' => array(
+						'type' => 'SEOPressSettings_TitleDescriptionNoindexNofollow',
+					),
+					// TODO: Dynamically generate this list based on all custom post types registered.
 				),
 			)
 		);
@@ -239,6 +329,10 @@ add_action(
 					'single_titles'           => array(
 						'type'        => 'SEOPressSettings_SingleTitles',
 						'description' => 'Formats of titles for posts and pages.',
+					),
+					'archive_titles'          => array(
+						'type'        => 'SEOPressSettings_ArchiveTitles',
+						'description' => 'Customized metas for all archives.',
 					),
 					'archives_author_title'   => array(
 						'type'        => 'String',
@@ -1224,13 +1318,37 @@ add_action(
 						'home_site_desc'          => $seopress_titles_options['seopress_titles_home_site_desc'],
 						'separator'               => $seopress_titles_options['seopress_titles_sep'],
 						'single_titles'           => array(
-							'post' => array(
+							'post'    => array(
 								'title'       => $seopress_titles_options['seopress_titles_single_titles']['post']['title'],
 								'description' => $seopress_titles_options['seopress_titles_single_titles']['post']['description'],
+								'noindex'     => (bool) $seopress_titles_options['seopress_titles_single_titles']['post']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_single_titles']['post']['nofollow'],
+								'date'        => (bool) $seopress_titles_options['seopress_titles_single_titles']['post']['date'],
+								'thumb_gcs'   => (bool) $seopress_titles_options['seopress_titles_single_titles']['post']['thumb_gcs'],
 							),
-							'page' => array(
+							'page'    => array(
 								'title'       => $seopress_titles_options['seopress_titles_single_titles']['page']['title'],
 								'description' => $seopress_titles_options['seopress_titles_single_titles']['page']['description'],
+								'noindex'     => (bool) $seopress_titles_options['seopress_titles_single_titles']['page']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_single_titles']['page']['nofollow'],
+								'date'        => (bool) $seopress_titles_options['seopress_titles_single_titles']['page']['date'],
+								'thumb_gcs'   => (bool) $seopress_titles_options['seopress_titles_single_titles']['page']['thumb_gcs'],
+							),
+							'product' => array(
+								'title'       => $seopress_titles_options['seopress_titles_single_titles']['product']['title'],
+								'description' => $seopress_titles_options['seopress_titles_single_titles']['product']['description'],
+								'noindex'     => (bool) $seopress_titles_options['seopress_titles_single_titles']['product']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_single_titles']['product']['thumb_gcs'],
+								'date'        => (bool) $seopress_titles_options['seopress_titles_single_titles']['product']['date'],
+								'thumb_gcs'   => (bool) $seopress_titles_options['seopress_titles_single_titles']['product']['thumb_gcs'],
+							),
+						),
+						'archive_titles'          => array(
+							'product' => array(
+								'title'       => $seopress_titles_options['seopress_titles_archive_titles']['product']['title'],
+								'description' => $seopress_titles_options['seopress_titles_archive_titles']['product']['description'],
+								'noindex'     => (bool) $seopress_titles_options['seopress_titles_archive_titles']['product']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_archive_titles']['product']['nofollow'],
 							),
 						),
 						'archives_author_title'   => $seopress_titles_options['seopress_titles_archives_author_title'],
@@ -1247,15 +1365,33 @@ add_action(
 						'archives_404_title'      => $seopress_titles_options['seopress_titles_archives_404_title'],
 						'archives_404_desc'       => $seopress_titles_options['seopress_titles_archives_404_desc'],
 						'tax_titles'              => array(
-							'category' => array(
+							'category'        => array(
+								'disable'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['category']['enable'],
 								'title'       => $seopress_titles_options['seopress_titles_tax_titles']['category']['title'],
 								'description' => $seopress_titles_options['seopress_titles_tax_titles']['category']['description'],
 								'noindex'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['category']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_tax_titles']['category']['nofollow'],
 							),
-							'post_tag' => array(
+							'post_tag'        => array(
+								'disable'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['enable'],
 								'title'       => $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['title'],
 								'description' => $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['description'],
 								'noindex'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_tax_titles']['post_tag']['nofollow'],
+							),
+							'productCategory' => array(
+								'disable'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['product_cat']['enable'],
+								'title'       => $seopress_titles_options['seopress_titles_tax_titles']['product_cat']['title'],
+								'description' => $seopress_titles_options['seopress_titles_tax_titles']['product_cat']['description'],
+								'noindex'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['product_cat']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_tax_titles']['product_cat']['nofollow'],
+							),
+							'productTag'      => array(
+								'disable'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['product_tag']['enable'],
+								'title'       => $seopress_titles_options['seopress_titles_tax_titles']['product_tag']['title'],
+								'description' => $seopress_titles_options['seopress_titles_tax_titles']['product_tag']['description'],
+								'noindex'     => (bool) $seopress_titles_options['seopress_titles_tax_titles']['product_tag']['noindex'],
+								'nofollow'    => (bool) $seopress_titles_options['seopress_titles_tax_titles']['product_tag']['nofollow'],
 							),
 						),
 						'noindex'                 => (bool) $seopress_titles_options['seopress_titles_noindex'],
