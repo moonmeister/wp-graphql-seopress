@@ -368,6 +368,10 @@ add_action(
 					'attachment' => array(
 						'type' => 'SEOPressSettings_ShouldBeIncluded',
 					),
+					'product'    => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+					// TODO: Dynamically generate this list based on all custom post types registered.
 				),
 			)
 		);
@@ -377,12 +381,19 @@ add_action(
 			array(
 				'description' => 'Title and Description Format.',
 				'fields'      => array(
-					'category' => array(
+					'category'        => array(
 						'type' => 'SEOPressSettings_ShouldBeIncluded',
 					),
-					'postTag'  => array(
+					'postTag'         => array(
 						'type' => 'SEOPressSettings_ShouldBeIncluded',
 					),
+					'productCategory' => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+					'productTag'      => array(
+						'type' => 'SEOPressSettings_ShouldBeIncluded',
+					),
+					// TODO: Dynamically generate this list based on all custom taxonomies registered.
 				),
 			)
 		);
@@ -611,6 +622,7 @@ add_action(
 						'type'        => 'Boolean',
 						'description' => 'subscriber should not be tracked.',
 					),
+					// TODO: Dynamically generate this list based on all custom user roles registered.
 				),
 			)
 		);
@@ -925,6 +937,7 @@ add_action(
 						'type'        => 'Boolean',
 						'description' => 'True if enabled.',
 					),
+					// TODO: Dynamically generate this list based on all custom user roles registered.
 				),
 			)
 		);
@@ -1273,13 +1286,22 @@ add_action(
 							'attachment' => array(
 								'include' => (bool) $seopress_xml_html_sitemap_options['seopress_xml_sitemap_post_types_list']['attachment']['include'],
 							),
+							'product'    => array(
+								'include' => (bool) $seopress_xml_html_sitemap_options['seopress_xml_sitemap_post_types_list']['product']['include'],
+							),
 						),
 						'sitemapTaxonomies'        => array(
-							'category' => array(
+							'category'        => array(
 								'include' => (bool) $seopress_xml_html_sitemap_options['seopress_xml_sitemap_taxonomies_list']['category']['include'],
 							),
-							'post_tag' => array(
+							'postTag'         => array(
 								'include' => (bool) $seopress_xml_html_sitemap_options['seopress_xml_sitemap_taxonomies_list']['post_tag']['include'],
+							),
+							'productCategory' => array(
+								'include' => (bool) $seopress_xml_html_sitemap_options['seopress_xml_sitemap_taxonomies_list']['product_cat']['include'],
+							),
+							'productTag'      => array(
+								'include' => (bool) $seopress_xml_html_sitemap_options['seopress_xml_sitemap_taxonomies_list']['product_tag']['include'],
 							),
 						),
 						'htmlMapping'              => $seopress_xml_html_sitemap_options['seopress_xml_sitemap_html_mapping'],
