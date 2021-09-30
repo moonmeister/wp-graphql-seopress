@@ -572,6 +572,14 @@ add_action(
 						'type'        => 'Boolean',
 						'description' => 'subscriber should not be tracked.',
 					),
+					'customer'      => array(
+						'type'        => 'Boolean',
+						'description' => 'subscriber should not be tracked.',
+					),
+					'shop_manager'  => array(
+						'type'        => 'Boolean',
+						'description' => 'subscriber should not be tracked.',
+					),
 				),
 			)
 		);
@@ -1286,6 +1294,8 @@ add_action(
 							'author'        => (bool) $seopress_google_analytics_options['seopress_google_analytics_roles']['author'],
 							'contributor'   => (bool) $seopress_google_analytics_options['seopress_google_analytics_roles']['contributor'],
 							'subscriber'    => (bool) $seopress_google_analytics_options['seopress_google_analytics_roles']['subscriber'],
+							'customer'      => (bool) $seopress_google_analytics_options['seopress_google_analytics_roles']['customer'],
+							'shop_manager'  => (bool) $seopress_google_analytics_options['seopress_google_analytics_roles']['shop_manager'],
 						),
 						'googleAnalyticsOptimize'          => $seopress_google_analytics_options['seopress_google_analytics_optimize'],
 						'googleAnalyticsAdWords'           => $seopress_google_analytics_options['seopress_google_analytics_ads'],
