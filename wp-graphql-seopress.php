@@ -1307,6 +1307,563 @@ add_action(
 			)
 		);
 
+		// PRO Settings
+		register_graphql_object_type(
+			'SEOPressSettings_Time',
+			array(
+				'description' => 'SEOPress hour and minute times.',
+				'fields'      => array(
+					'hour'   => array(
+						'type'        => 'Integer',
+						'description' => 'The number of the hour (0-23).',
+					),
+					'minute' => array(
+						'type'        => 'Integer',
+						'description' => 'The number of the minute (0-59).',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_OpenHours',
+			array(
+				'description' => 'Is business open, and start and end times.',
+				'fields'      => array(
+					'open'  => array(
+						'type'        => 'String',
+						'description' => 'The business is open.',
+					),
+					'start' => array(
+						'type'        => 'SEOPressSettings_Time',
+						'description' => 'Start time of open hours.',
+					),
+					'end'   => array(
+						'type'        => 'SEOPressSettings_Time',
+						'description' => 'End time of open hours.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_OpenHoursAmPm',
+			array(
+				'description' => 'Is business closed all day and when open.',
+				'fields'      => array(
+					'closed' => array(
+						'type'        => 'Boolean',
+						'description' => 'The business is closed on this day.',
+					),
+					'am'     => array(
+						'type'        => 'SEOPressSettings_OpenHours',
+						'description' => 'Hours open on Monday.',
+					),
+					'pm'     => array(
+						'type'        => 'SEOPressSettings_OpenHours',
+						'description' => 'Hours open on Tuesday.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_BusinessDays',
+			array(
+				'description' => 'List of days.',
+				'fields'      => array(
+					'monday'    => array(
+						'type'        => 'SEOPressSettings_OpenHoursAmPm',
+						'description' => 'Hours open on Monday.',
+					),
+					'tuesday'   => array(
+						'type'        => 'SEOPressSettings_OpenHoursAmPm',
+						'description' => 'Hours open on Tuesday.',
+					),
+					'wednesday' => array(
+						'type'        => 'SEOPressSettings_OpenHoursAmPm',
+						'description' => 'Hours open on Wednesday.',
+					),
+					'thursday'  => array(
+						'type'        => 'SEOPressSettings_OpenHoursAmPm',
+						'description' => 'Hours open on Thursday.',
+					),
+					'friday'    => array(
+						'type'        => 'SEOPressSettings_OpenHoursAmPm',
+						'description' => 'Hours open on Friday.',
+					),
+					'saturday'  => array(
+						'type'        => 'SEOPressSettings_OpenHoursAmPm',
+						'description' => 'Hours open on Saturday.',
+					),
+					'sunday'    => array(
+						'type'        => 'SEOPressSettings_OpenHoursAmPm',
+						'description' => 'Hours open on Sunday.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_BreadcrumbCptShow',
+			array(
+				'description' => 'Custom post type to show.',
+				'fields'      => array(
+					'customPostType' => array(
+						'type'        => 'String',
+						'description' => 'The custom post type to show in breadcrumbs.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_BreadcrumbCptList',
+			array(
+				'description' => 'Which custom post types to show in breadcrumbs.',
+				'fields'      => array(
+					'category'        => array(
+						'type' => 'SEOPressSettings_BreadcrumbCptShow',
+					),
+					'postTag'         => array(
+						'type' => 'SEOPressSettings_BreadcrumbCptShow',
+					),
+					'productCategory' => array(
+						'type' => 'SEOPressSettings_BreadcrumbCptShow',
+					),
+					'productTag'      => array(
+						'type' => 'SEOPressSettings_BreadcrumbCptShow',
+					),
+					// TODO: Dynamically generate this list based on all custom taxonomies registered.
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_BreadcrumbTaxonomiesShow',
+			array(
+				'description' => 'Taxonomy to show.',
+				'fields'      => array(
+					'taxonomy' => array(
+						'type'        => 'String',
+						'description' => 'The custom post type to show in breadcrumbs.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_BreadcrumbTaxonomiesList',
+			array(
+				'description' => 'Which custom taxonomy to show in breadcrumbs.',
+				'fields'      => array(
+					'post'    => array(
+						'type' => 'SEOPressSettings_BreadcrumbTaxonomiesShow',
+					),
+					'page'    => array(
+						'type' => 'SEOPressSettings_BreadcrumbTaxonomiesShow',
+					),
+					'product' => array(
+						'type' => 'SEOPressSettings_BreadcrumbTaxonomiesShow',
+					),
+					// TODO: Dynamically generate this list based on all custom post types registered.
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_GoogleNewsPostTypesEnabled',
+			array(
+				'description' => 'Is this enabled',
+				'fields'      => array(
+					'enabled' => array(
+						'type'         => 'Boolean',
+						'descriptions' => 'This post type is enabled.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_GoogleNewsPostTypes',
+			array(
+				'description' => 'Title and Description Format.',
+				'fields'      => array(
+					'post'            => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'page'            => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'attachment'      => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'wpBlock'         => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'product'         => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'shopOrder'       => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'shopCoupon'      => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'actionMonitor'   => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'seopressBot'     => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'seopress404'     => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					'seopressSchemas' => array(
+						'type' => 'SEOPressSettings_GoogleNewsPostTypesEnabled',
+					),
+					// TODO: Dynamically generate this list.
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_Pro',
+			array(
+				'description' => 'SEOPress Tools settings pages.',
+				'fields'      => array(
+					'localBusinessSchemaPage'              => array(
+						'type'        => 'String',
+						'description' => 'Which page to display schema on.',
+					),
+					'localBusinessType'                    => array(
+						'type'        => 'String',
+						'description' => 'What type of local business schema type to use.',
+					),
+					'localBusinessStreetAddress'           => array(
+						'type'        => 'String',
+						'description' => 'Street address to use in local business schema.',
+					),
+					'localBusinessCity'                    => array(
+						'type'        => 'String',
+						'description' => 'City to use in local business schema.',
+					),
+					'localBusinessState'                   => array(
+						'type'        => 'String',
+						'description' => 'State to use in local business schema.',
+					),
+					'localBusinessPostalCode'              => array(
+						'type'        => 'String',
+						'description' => 'Postal code to use in local business schema.',
+					),
+					'localBusinessCountry'                 => array(
+						'type'        => 'String',
+						'description' => 'Country to use in local business schema.',
+					),
+					'localBusinessLatitude'                => array(
+						'type'        => 'String',
+						'description' => 'Latitude to use in local business schema.',
+					),
+					'localBusinessLongitude'               => array(
+						'type'        => 'String',
+						'description' => 'Longitude to use in local business schema.',
+					),
+					'localBusinessPlaceId'                 => array(
+						'type'        => 'String',
+						'description' => 'Place ID to use in local business schema. (Ref: https://developers.google.com/places/web-service/place-id)',
+					),
+					'localBusinessUrl'                     => array(
+						'type'        => 'String',
+						'description' => 'URL to use in local business schema.',
+					),
+					'localBusinessPhone'                   => array(
+						'type'        => 'String',
+						'description' => 'Phone to use in local business schema.',
+					),
+					'localBusinessPriceRange'              => array(
+						'type'        => 'String',
+						'description' => 'Price range to use in local business schema.',
+					),
+					'localBusinessCuisine'                 => array(
+						'type'        => 'String',
+						'description' => 'Cuisine to use in local business schema.',
+					),
+					'localBusinessOpeningHours'            => array(
+						'type'        => 'SEOPressSettings_BusinessDays',
+						'description' => 'Open Hours to use in local business schema.',
+					),
+					'woocommerceNoindexCartPage'           => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'woocommerceNoindexCheckoutPage'       => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'woocommerceNoindexAccountPage'        => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'woocommerceAddProductPriceAmountMeta' => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'woocommerceAddProductPriceCurrencyMeta' => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'woocommerceRemoveGeneratorMeta'       => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'woocommerceRemoveDefaultJsonLdSchema' => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'woocommerceRemoveBreadcrumbsSchema'   => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'easyDigitalDownloadsAddProductPriceAmountMeta' => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'easyDigitalDownloadsAddProductPriceCurrencyMeta' => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'easyDigitalDownloadsRemoveGeneratorMeta' => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'dublinCoreEnabled'                    => array(
+						'type'        => 'Boolean',
+						'description' => 'Dublin Core meta tags enabled.',
+					),
+					'richSnippetsEnabled'                  => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'richSnippetsPublisherLogo'            => array(
+						'type'        => 'String',
+						'description' => '',
+					),
+					'richSnippetsPublisherLogoWidth'       => array(
+						'type'        => 'String',
+						'description' => '',
+					),
+					'richSnippetsPublisherLogoHeight'      => array(
+						'type'        => 'String',
+						'description' => '',
+					),
+					'richSnippetsSiteNavigation'           => array(
+						'type'        => 'String',
+						'description' => '',
+					),
+					'breadcrumbsEnabled'                   => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'breadcrumbsJsonEnabled'               => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'breadcrumbsSeparator'                 => array(
+						'type'        => 'String',
+						'description' => '',
+					),
+					'breadcrumbsPostTypeShownCustomPostType' => array(
+						'type'        => 'SEOPressSettings_BreadcrumbCptList',
+						'description' => 'Post type to show in Breadcrumbs for custom post types.',
+					),
+					'breadcrumbsPostTypeShownTaxonomy'     => array(
+						'type'        => 'SEOPressSettings_BreadcrumbTaxonomiesList',
+						'description' => 'Post type to show in Breadcrumbs for taxonomies.',
+					),
+					'breadcrumbsI18nHere'                  => array(
+						'type'        => 'String',
+						'description' => 'HTML prefixing breadcrumbs.',
+					),
+					'breadcrumbsI18nHome'                  => array(
+						'type'        => 'String',
+						'description' => 'Translation for "Homepage".',
+					),
+					'breadcrumbsI18nAuthor'                => array(
+						'type'        => 'String',
+						'description' => 'Translation for "Author:".',
+					),
+					'breadcrumbsI18n404'                   => array(
+						'type'        => 'String',
+						'description' => 'Translation for "Error 404".',
+					),
+					'breadcrumbsI18nSearch'                => array(
+						'type'        => 'String',
+						'description' => 'Translation for "Search results for".',
+					),
+					'breadcrumbsI18nNoResults'             => array(
+						'type'        => 'String',
+						'description' => 'Translation for "No results".',
+					),
+					'breadcrumbsRemoveStaticPosts'         => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'breadcrumbsRemoveStaticShopPage'      => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'breadcrumbsRemoveDefaultSeparator'    => array(
+						'type'        => 'Boolean',
+						'description' => '',
+					),
+					'robotsFileEnabled'                    => array(
+						'type'        => 'Boolean',
+						'description' => 'Is the robots file enabled in SEOPress.',
+					),
+					'robotsFileContents'                   => array(
+						'type'        => 'String',
+						'description' => 'The contents of the `robots.txt` file that is controlled by SEOPress.',
+					),
+					'googleNewsEnabled'                    => array(
+						'type'        => 'Boolean',
+						'description' => 'Is the Google News sitemap enabled.',
+					),
+					'googleNewsName'                       => array(
+						'type'        => 'String',
+						'description' => 'The Google News publisher name.',
+					),
+					'googleNewsPostTypes'                  => array(
+						'type'        => 'SEOPressSettings_GoogleNewsPostTypes',
+						'description' => 'The list of post types that will be shown in Google News sitemap.',
+					),
+					'notFoundMonitoringEnabled'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable 404 monitoring',
+					),
+					'notFoundCleaningEnabled'              => array(
+						'type'        => 'Boolean',
+						'description' => ' Automatically delete 404 after 30 days (useful if you have a lot of 404).',
+					),
+					'notFoundRedirectTo'                   => array(
+						'type'        => 'String',
+						'description' => 'Where to redirect 404s to (custom, home, or none).',
+					),
+					'notFoundRedirectToCustomUrl'          => array(
+						'type'        => 'String',
+						'description' => 'URL to redirect to in case of 404.',
+					),
+					'notFoundRedirectionStatusCode'        => array(
+						'type'        => 'String',
+						'description' => 'The HTTP status code to use on redirecting a 404.',
+					),
+					'notFoundEmailNotificationEnabled'     => array(
+						'type'        => 'Boolean',
+						'description' => 'Should emails be sent when a new 404 is created.',
+					),
+					'notFoundEmailNotificationAddress'     => array(
+						'type'        => 'String',
+						'description' => 'The address for email notification of a new 404.',
+					),
+					'notFoundEmailNotificationNoAutomaticRedirect' => array(
+						'type'        => 'Boolean',
+						'description' => 'Disable email for automatic redirections (if post URL changed).',
+					),
+					'notFoundIpLogging'                    => array(
+						'type'        => 'String',
+						'description' => 'How much of the IP should be logged when user hits a 404 (none, full, anon).',
+					),
+					'rssHtmlPrefix'                        => array(
+						'type'        => 'String',
+						'description' => 'HTML before each post in RSS feed.',
+					),
+					'rssHtmlSuffix'                        => array(
+						'type'        => 'String',
+						'description' => 'HTML after each post in RSS feed.',
+					),
+					'rssCommentsDisabled'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove link to comments RSS feed.',
+					),
+					'rssPostsDisabled'                     => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove link to posts RSS feed.',
+					),
+					'rssExtraDisabled'                     => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove link to extra RSS feed (used for: author, categories, custom taxonomies, custom post type, comments feed for a single post...).',
+					),
+					'rssAllDisabled'                       => array(
+						'type'        => 'Boolean',
+						'description' => 'Disable all RSS feeds.',
+					),
+					'rewriteSearchUrl'                     => array(
+						'type'        => 'String',
+						'description' => 'The custom URL for the search page.',
+					),
+					'whiteLabelRemoveAdminHeader'          => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove the SEOPress admin header including Notifications Center, SEO tools and Useful links.',
+					),
+					'whiteLabelRemoveHeaderIcons'          => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove SEOPress icons on the right in header (changelog, YouTube, Twitter...)',
+					),
+					'whiteLabelFilterSeoDashiconsClass'    => array(
+						'type'        => 'String',
+						'description' => 'Custom CSS class for Dashicons.',
+					),
+					'whiteLabelSEOPressAdminBarTitle'      => array(
+						'type'        => 'String',
+						'description' => 'The title to display for SEOPress in the top admin bar.',
+					),
+					'whiteLabelSEOPressMainMenuTitle'      => array(
+						'type'        => 'String',
+						'description' => 'The title to display for SEOPress in the dashboard sidebar.',
+					),
+					'whiteLabelSEOPressAdminBarImage'      => array(
+						'type'        => 'String',
+						'description' => 'The URL to the whitelabel image.',
+					),
+					'whiteLabelRemoveCredits'              => array(
+						'type'        => 'Boolean',
+						'description' => 'Is the footer credits to SEOPress removed.',
+					),
+					'whiteLabelRemoveHelpDocumentationIcons' => array(
+						'type'        => 'Boolean',
+						'description' => 'Hide SEOPress link/help icons.',
+					),
+					'whiteLabelSEOPressName'               => array(
+						'type'        => 'String',
+						'description' => 'The name for SEOPress to display as in the plugin list.',
+					),
+					'whiteLabelSEOPressProName'            => array(
+						'type'        => 'String',
+						'description' => 'The name for SEOPress Pro to display as in the plugin list.',
+					),
+					'whiteLabelSEOPressDescription'        => array(
+						'type'        => 'String',
+						'description' => 'The description for SEOPress to display with in the plugin list.',
+					),
+					'whiteLabelSEOPressProDescription'     => array(
+						'type'        => 'String',
+						'description' => 'The description for SEOPress Pro to display with in the plugin list.',
+					),
+					'whiteLabelSEOPressAuthor'             => array(
+						'type'        => 'String',
+						'description' => 'The author for SEOPress to display with in the plugin list.',
+					),
+					'whiteLabelSEOPressWebsite'            => array(
+						'type'        => 'String',
+						'description' => 'The author URL for SEOPress to display with in the plugin list.',
+					),
+					'whiteLabelRemoveViewDetails'          => array(
+						'type'        => 'Boolean',
+						'description' => 'Remove the "View Details" button in the plugin list.',
+					),
+				),
+			)
+		);
+
 		// Object that includes all settings pages.
 		register_graphql_object_type(
 			'SEOPressSettings',
@@ -1334,6 +1891,9 @@ add_action(
 					),
 					'tools'          => array(
 						'type' => 'SEOPressSettings_Tools',
+					),
+					'pro'            => array(
+						'type' => 'SEOPressSettings_Pro',
 					),
 				),
 			)
@@ -1737,6 +2297,324 @@ add_action(
 						'compatibilityAviaLayout' => (bool) $seopress_tools_option['seopress_setting_section_tools_compatibility_avia'],
 						'compatibilityFusion'     => (bool) $seopress_tools_option['seopress_setting_section_tools_compatibility_fusion'],
 					);
+					$seopress_pro_options = get_option( 'seopress_pro_option_name' );
+					$seopress_pro_settings = array(
+						'localBusinessSchemaPage'          => $seopress_pro_options['seopress_local_business_page'],
+						'localBusinessType'                => $seopress_pro_options['seopress_local_business_type'],
+						'localBusinessStreetAddress'       => $seopress_pro_options['seopress_local_business_street_address'],
+						'localBusinessCity'                => $seopress_pro_options['seopress_local_business_address_locality'],
+						'localBusinessState'               => $seopress_pro_options['seopress_local_business_address_region'],
+						'localBusinessPostalCode'          => $seopress_pro_options['seopress_local_business_postal_code'],
+						'localBusinessCountry'             => $seopress_pro_options['seopress_local_business_address_country'],
+						'localBusinessLatitude'            => $seopress_pro_options['seopress_local_business_lat'],
+						'localBusinessLongitude'           => $seopress_pro_options['seopress_local_business_lon'],
+						'localBusinessPlaceId'             => $seopress_pro_options['seopress_local_business_place_id'],
+						'localBusinessUrl'                 => $seopress_pro_options['seopress_local_business_url'],
+						'localBusinessPhone'               => $seopress_pro_options['seopress_local_business_phone'],
+						'localBusinessPriceRange'          => $seopress_pro_options['seopress_local_business_price_range'],
+						'localBusinessCuisine'             => $seopress_pro_options['seopress_local_business_cuisine'],
+						'localBusinessOpeningHours'        => array(
+							'monday'    => array(
+								'closed' => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][0]['open'],
+								'am'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][0]['am']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][0]['am']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][0]['am']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][0]['am']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][0]['am']['end']['mins'],
+									),
+								),
+								'pm'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][0]['pm']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][0]['pm']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][0]['pm']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][0]['pm']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][0]['pm']['end']['mins'],
+									),
+								),
+							),
+							'tuesday'   => array(
+								'closed' => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][1]['open'],
+								'am'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][1]['am']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][1]['am']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][1]['am']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][1]['am']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][1]['am']['end']['mins'],
+									),
+								),
+								'pm'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][1]['pm']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][1]['pm']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][1]['pm']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][1]['pm']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][1]['pm']['end']['mins'],
+									),
+								),
+							),
+							'wednesday' => array(
+								'closed' => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][2]['open'],
+								'am'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][2]['am']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][2]['am']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][2]['am']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][2]['am']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][2]['am']['end']['mins'],
+									),
+								),
+								'pm'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][2]['pm']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][2]['pm']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][2]['pm']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][2]['pm']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][2]['pm']['end']['mins'],
+									),
+								),
+							),
+							'thursday'  => array(
+								'closed' => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][3]['open'],
+								'am'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][3]['am']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][3]['am']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][3]['am']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][3]['am']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][3]['am']['end']['mins'],
+									),
+								),
+								'pm'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][3]['pm']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][3]['pm']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][3]['pm']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][3]['pm']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][3]['pm']['end']['mins'],
+									),
+								),
+							),
+							'friday'    => array(
+								'closed' => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][4]['open'],
+								'am'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][4]['am']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][4]['am']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][4]['am']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][4]['am']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][4]['am']['end']['mins'],
+									),
+								),
+								'pm'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][4]['pm']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][4]['pm']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][4]['pm']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][4]['pm']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][4]['pm']['end']['mins'],
+									),
+								),
+							),
+							'saturday'  => array(
+								'closed' => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][5]['open'],
+								'am'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][5]['am']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][5]['am']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][5]['am']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][5]['am']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][5]['am']['end']['mins'],
+									),
+								),
+								'pm'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][5]['pm']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][5]['pm']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][5]['pm']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][5]['pm']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][5]['pm']['end']['mins'],
+									),
+								),
+							),
+							'sunday'    => array(
+								'closed' => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][6]['open'],
+								'am'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][6]['am']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][6]['am']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][6]['am']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][6]['am']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][6]['am']['end']['mins'],
+									),
+								),
+								'pm'     => array(
+									'open'  => (bool) $seopress_pro_options['seopress_local_business_opening_hours'][6]['pm']['open'],
+									'start' => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][6]['pm']['start']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][6]['pm']['start']['mins'],
+									),
+									'end'   => array(
+										'hour'   => $seopress_pro_options['seopress_local_business_opening_hours'][6]['pm']['end']['hours'],
+										'minute' => $seopress_pro_options['seopress_local_business_opening_hours'][6]['pm']['end']['mins'],
+									),
+								),
+							),
+						),
+						'woocommerceNoindexCartPage'       => (bool) $seopress_pro_options['seopress_woocommerce_cart_page_no_index'],
+						'woocommerceNoindexCheckoutPage'   => (bool) $seopress_pro_options['seopress_woocommerce_checkout_page_no_index'],
+						'woocommerceNoindexAccountPage'    => (bool) $seopress_pro_options['seopress_woocommerce_customer_account_page_no_index'],
+						'woocommerceAddProductPriceAmountMeta' => (bool) $seopress_pro_options['seopress_woocommerce_product_og_price'],
+						'woocommerceAddProductPriceCurrencyMeta' => (bool) $seopress_pro_options['seopress_woocommerce_product_og_currency'],
+						'woocommerceRemoveGeneratorMeta'   => (bool) $seopress_pro_options['seopress_woocommerce_meta_generator'],
+						'woocommerceRemoveDefaultJsonLdSchema' => (bool) $seopress_pro_options['seopress_woocommerce_schema_output'],
+						'woocommerceRemoveBreadcrumbsSchema' => (bool) $seopress_pro_options['seopress_woocommerce_schema_breadcrumbs_output'],
+						'easyDigitalDownloadsAddProductPriceAmountMeta' => (bool) $seopress_pro_options['seopress_edd_product_og_price'],
+						'easyDigitalDownloadsAddProductPriceCurrencyMeta' => (bool) $seopress_pro_options['seopress_edd_product_og_currency'],
+						'easyDigitalDownloadsRemoveGeneratorMeta' => (bool) $seopress_pro_options['seopress_edd_meta_generator'],
+						'dublinCoreEnabled'                => (bool) $seopress_pro_options['seopress_dublin_core_enable'],
+						'richSnippetsEnabled'              => (bool) $seopress_pro_options['seopress_rich_snippets_enable'],
+						'richSnippetsPublisherLogo'        => $seopress_pro_options['seopress_rich_snippets_publisher_logo'],
+						'richSnippetsPublisherLogoWidth'   => $seopress_pro_options['seopress_rich_snippets_publisher_logo_width'],
+						'richSnippetsPublisherLogoHeight'  => $seopress_pro_options['seopress_rich_snippets_publisher_logo_height'],
+						'richSnippetsSiteNavigation'       => $seopress_pro_options['seopress_rich_snippets_site_nav'],
+						'breadcrumbsEnabled'               => (bool) $seopress_pro_options['seopress_breadcrumbs_enable'],
+						'breadcrumbsJsonEnabled'           => (bool) $seopress_pro_options['seopress_breadcrumbs_json_enable'],
+						'breadcrumbsSeparator'             => $seopress_pro_options['seopress_breadcrumbs_separator'],
+						'breadcrumbsPostTypeShownCustomPostType' => array(
+							'category'        => array(
+								'customPostType' => $seopress_pro_options['seopress_breadcrumbs_cpt']['category']['cpt'],
+							),
+							'postTag'         => array(
+								'customPostType' => $seopress_pro_options['seopress_breadcrumbs_cpt']['post_tag']['cpt'],
+							),
+							'productCategory' => array(
+								'customPostType' => $seopress_pro_options['seopress_breadcrumbs_cpt']['product_cat']['cpt'],
+							),
+							'productTag'      => array(
+								'customPostType' => $seopress_pro_options['seopress_breadcrumbs_cpt']['product_tag']['cpt'],
+							),
+						),
+						'breadcrumbsPostTypeShownTaxonomy' => array(
+							'post'    => array(
+								'taxonomy' => $seopress_pro_options['seopress_breadcrumbs_tax']['post']['tax'],
+							),
+							'page'    => array(
+								'taxonomy' => $seopress_pro_options['seopress_breadcrumbs_tax']['page']['tax'],
+							),
+							'product' => array(
+								'taxonomy' => $seopress_pro_options['seopress_breadcrumbs_tax']['product']['tax'],
+							),
+						),
+						'breadcrumbsI18nHere'              => $seopress_pro_options['seopress_breadcrumbs_i18n_here'],
+						'breadcrumbsI18nHome'              => $seopress_pro_options['seopress_breadcrumbs_i18n_home'],
+						'breadcrumbsI18nAuthor'            => $seopress_pro_options['seopress_breadcrumbs_i18n_author'],
+						'breadcrumbsI18n404'               => $seopress_pro_options['seopress_breadcrumbs_i18n_404'],
+						'breadcrumbsI18nSearch'            => $seopress_pro_options['seopress_breadcrumbs_i18n_search'],
+						'breadcrumbsI18nNoResults'         => $seopress_pro_options['seopress_breadcrumbs_i18n_no_results'],
+						'breadcrumbsRemoveStaticPosts'     => (bool) $seopress_pro_options['seopress_breadcrumbs_remove_blog_page'],
+						'breadcrumbsRemoveStaticShopPage'  => (bool) $seopress_pro_options['seopress_breadcrumbs_remove_shop_page'],
+						'breadcrumbsRemoveDefaultSeparator' => (bool) $seopress_pro_options['seopress_breadcrumbs_separator_disable'],
+						'robotsFileEnabled'                => (bool) $seopress_pro_options['seopress_robots_enable'],
+						'robotsFileContents'               => $seopress_pro_options['seopress_robots_file'],
+						'googleNewsEnabled'                => (bool) $seopress_pro_options['seopress_news_enable'],
+						'googleNewsName'                   => $seopress_pro_options['seopress_news_name'],
+						'googleNewsPostTypes'              => array(
+							'post'            => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['post']['include'],
+							),
+							'page'            => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['page']['include'],
+							),
+							'attachment'      => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['attachment']['include'],
+							),
+							'wpBlock'         => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['wp_block']['include'],
+							),
+							'product'         => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['product']['include'],
+							),
+							'shopOrder'       => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['shop_order']['include'],
+							),
+							'shopCoupon'      => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['shop_coupon']['include'],
+							),
+							'actionMonitor'   => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['action_monitor']['include'],
+							),
+							'seopressBot'     => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['seopress_bot']['include'],
+							),
+							'seopress404'     => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['seopress_404']['include'],
+							),
+							'seopressSchemas' => array(
+								'enabled' => (bool) $seopress_pro_options['seopress_news_name_post_types_list']['seopress_schemas']['include'],
+							),
+						),
+						'notFoundMonitoringEnabled'        => (bool) $seopress_pro_options['seopress_404_enable'],
+						'notFoundCleaningEnabled'          => (bool) $seopress_pro_options['seopress_404_cleaning'],
+						'notFoundRedirectTo'               => $seopress_pro_options['seopress_404_redirect_home'],
+						'notFoundRedirectToCustomUrl'      => $seopress_pro_options['seopress_404_redirect_custom_url'],
+						'notFoundRedirectionStatusCode'    => $seopress_pro_options['seopress_404_redirect_status_code'],
+						'notFoundEmailNotificationEnabled' => (bool) $seopress_pro_options['seopress_404_enable_mails'],
+						'notFoundEmailNotificationAddress' => (bool) $seopress_pro_options['seopress_404_enable_mails_from'],
+						'notFoundEmailNotificationNoAutomaticRedirect' => (bool) $seopress_pro_options['seopress_404_disable_automatic_redirects'],
+						'notFoundIpLogging'                => $seopress_pro_options['seopress_404_ip_logging'],
+						'rssHtmlPrefix'                    => $seopress_pro_options['seopress_rss_before_html'],
+						'rssHtmlSuffix'                    => $seopress_pro_options['seopress_rss_after_html'],
+						'rssCommentsDisabled'              => (bool) $seopress_pro_options['seopress_rss_disable_comments_feed'],
+						'rssPostsDisabled'                 => (bool) $seopress_pro_options['seopress_rss_disable_posts_feed'],
+						'rssExtraDisabled'                 => (bool) $seopress_pro_options['seopress_rss_disable_extra_feed'],
+						'rssAllDisabled'                   => (bool) $seopress_pro_options['seopress_rss_disable_all_feeds'],
+						'rewriteSearchUrl'                 => $seopress_pro_options['seopress_rewrite_search'],
+						'whiteLabelRemoveAdminHeader'      => (bool) $seopress_pro_options['seopress_white_label_admin_header'],
+						'whiteLabelRemoveHeaderIcons'      => (bool) $seopress_pro_options['seopress_white_label_admin_notices'],
+						'whiteLabelFilterSeoDashiconsClass' => $seopress_pro_options['seopress_white_label_admin_menu'],
+						'whiteLabelSEOPressAdminBarTitle'  => $seopress_pro_options['seopress_white_label_admin_bar_icon'],
+						'whiteLabelSEOPressMainMenuTitle'  => $seopress_pro_options['seopress_white_label_admin_title'],
+						'whiteLabelSEOPressAdminBarImage'  => $seopress_pro_options['seopress_white_label_admin_bar_logo'],
+						'whiteLabelRemoveCredits'          => (bool) $seopress_pro_options['seopress_white_label_footer_credits'],
+						'whiteLabelRemoveHelpDocumentationIcons' => (bool) $seopress_pro_options['seopress_white_label_help_links'],
+						'whiteLabelSEOPressName'           => $seopress_pro_options['seopress_white_label_plugin_list_title'],
+						'whiteLabelSEOPressProName'        => $seopress_pro_options['seopress_white_label_plugin_list_title_pro'],
+						'whiteLabelSEOPressDescription'    => $seopress_pro_options['seopress_white_label_plugin_list_desc'],
+						'whiteLabelSEOPressProDescription' => $seopress_pro_options['seopress_white_label_plugin_list_desc_pro'],
+						'whiteLabelSEOPressAuthor'         => $seopress_pro_options['seopress_white_label_plugin_list_author'],
+						'whiteLabelSEOPressWebsite'        => $seopress_pro_options['seopress_white_label_plugin_list_website'],
+						'whiteLabelRemoveViewDetails'      => (bool) $seopress_pro_options['seopress_white_label_plugin_list_view_details'],
+					);
 					return array(
 						'hasProLicense'  => get_option( 'seopress_pro_license_status' ) === 'valid',
 						'titlesMetas'    => $seopress_titles_settings,
@@ -1745,6 +2623,7 @@ add_action(
 						'analytics'      => $seopress_google_analytics_settings,
 						'advanced'       => $seopress_advanced_settings,
 						'tools'          => $seopress_tools_settings,
+						'pro'            => $seopress_pro_settings,
 					);
 				},
 			)
