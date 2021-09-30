@@ -547,6 +547,312 @@ add_action(
 			)
 		);
 
+		// Analytics Settings.
+		register_graphql_object_type(
+			'SEOPressSettings_WhoToTrack',
+			array(
+				'description' => 'Which types of users should be excluded from tracking.',
+				'fields'      => array(
+					'administrator' => array(
+						'type'        => 'Boolean',
+						'description' => 'Administrator should not be tracked.',
+					),
+					'editor'        => array(
+						'type'        => 'Boolean',
+						'description' => 'editor should not be tracked.',
+					),
+					'author'        => array(
+						'type'        => 'Boolean',
+						'description' => 'author should not be tracked.',
+					),
+					'contributor'   => array(
+						'type'        => 'Boolean',
+						'description' => 'contributor should not be tracked.',
+					),
+					'subscriber'    => array(
+						'type'        => 'Boolean',
+						'description' => 'subscriber should not be tracked.',
+					),
+				),
+			)
+		);
+
+		register_graphql_object_type(
+			'SEOPressSettings_Analytics',
+			array(
+				'description' => 'All SEOPress admin settings pages.',
+				'fields'      => array(
+					'googleAnalyticsEnable'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable Google Analytics.',
+					),
+					'googleAnalyticsUACode'                => array(
+						'type'        => 'String',
+						'description' => 'Google Analytics Universal Analytics tracking ID.',
+					),
+					'googleAnalyticsGA4Code'               => array(
+						'type'        => 'String',
+						'description' => 'Google Analytics 4 measurement ID.',
+					),
+					'googleAnalyticsNoTrackRoles'          => array(
+						'type' => 'SEOPressSettings_WhoToTrack',
+					),
+					'googleAnalyticsOptimize'              => array(
+						'type'        => 'String',
+						'description' => 'Google Analytics Optimize ID.',
+					),
+					'googleAnalyticsAdWords'               => array(
+						'type'        => 'String',
+						'description' => 'Google AdWords ID.',
+					),
+					'additionalTrackingHead'               => array(
+						'type'        => 'String',
+						'description' => 'Additional tracking code to add to head.',
+					),
+					'additionalTrackingBody'               => array(
+						'type'        => 'String',
+						'description' => 'Additional tracking code to add to top of body.',
+					),
+					'additionalTrackingFooter'             => array(
+						'type'        => 'String',
+						'description' => 'Additional tracking code to add to bottom of body.',
+					),
+					'googleAnalyticsRemarketing'           => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable remarketing, demographics, and interests reporting in Google Analytics.',
+					),
+					'googleAnalyticsIpAnonymization'       => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable IP Anonymization in Google Analytics.',
+					),
+					'googleAnalyticsLinkAttribution'       => array(
+						'type'        => 'Boolean',
+						'description' => 'Enhanced Link Attribution in Google Analytics',
+					),
+					'googleAnalyticsCrossEnable'           => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable cross-domain tracking in Google Analytics.',
+					),
+					'googleAnalyticsCrossDomainList'       => array(
+						'type'        => 'String',
+						'description' => 'Other domains to register for cross-domain tracking in Google Analytics.',
+					),
+					'googleAnalyticsLinkTrackingEnable'    => array(
+						'type'        => 'Boolean',
+						'description' => 'Should external link tracking be sent to Google Analytics.',
+					),
+					'googleAnalyticsDownloadTrackingEnable' => array(
+						'type'        => 'Boolean',
+						'description' => 'Should download tracking be sent to Google Analytics.',
+					),
+					'googleAnalyticsDownloadTracking'      => array(
+						'type'        => 'String',
+						'description' => 'File types to track downloads of in Google Analytics.',
+					),
+					'googleAnalyticsAffiliateTrackingEnable' => array(
+						'type'        => 'Boolean',
+						'description' => 'Should affiliate link tracking be sent to Google Analytics.',
+					),
+					'googleAnalyticsAffiliateTracking'     => array(
+						'type'        => 'String',
+						'description' => 'Keywords for affiliate link tracking to send to Google Analytics.',
+					),
+					'googleAnalyticsCustomDimensionAuthor' => array(
+						'type'        => 'String',
+						'description' => 'Custom dimension for author pages.',
+					),
+					'googleAnalyticsCustomDimensionCategory' => array(
+						'type'        => 'String',
+						'description' => 'Custom dimension for category pages.',
+					),
+					'googleAnalyticsCustomDimensionTag'    => array(
+						'type'        => 'String',
+						'description' => 'Custom dimension for tag pages.',
+					),
+					'googleAnalyticsCustomDimensionPostType' => array(
+						'type'        => 'String',
+						'description' => 'Custom dimension for post type pages.',
+					),
+					'googleAnalyticsCustomDimensionLoggedIn' => array(
+						'type'        => 'String',
+						'description' => 'Custom dimension for logged in users.',
+					),
+					'googleAnalyticsApiClientId'           => array(
+						'type'        => 'String',
+						'description' => 'Google Analytics API client ID. (Ref: https://www.seopress.org/support/guides/connect-wordpress-site-google-analytics/)',
+					),
+					'googleAnalyticsApiSecretId'           => array(
+						'type'        => 'String',
+						'description' => 'Google Analytics API secret ID. (Ref: https://www.seopress.org/support/guides/connect-wordpress-site-google-analytics/)',
+					),
+					'googleAnalyticsDashboardWidget'       => array(
+						'type'        => 'Boolean',
+						'description' => 'Should Google Analytics dashboard widget be removed.',
+					),
+					'googleAnalyticsEventPurchases'        => array(
+						'type'        => 'Boolean',
+						'description' => 'Should purchases be tracked in Google Analytics.',
+					),
+					'googleAnalyticsEventAddToCart'        => array(
+						'type'        => 'Boolean',
+						'description' => 'Should "Add to cart events" be tracked in Google Analytics.',
+					),
+					'googleAnalyticsEventRemoveFromCart'   => array(
+						'type'        => 'Boolean',
+						'description' => 'Should "Remove from cart events" be tracked in Google Analytics.',
+					),
+					'googleAnalyticsHtmlLocation'          => array(
+						'type'        => 'String',
+						'description' => 'Where in the page to put the Google Analytics tracking code.',
+					),
+					'cookieConsentRequired'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Should site request user\'s consent for analytics tracking.',
+					),
+					'cookieConsentAutomatic'               => array(
+						'type'        => 'Boolean',
+						'description' => 'Should site automatically accept user\'s consent for analytics tracking.',
+					),
+					'cookieConsentChangeChoice'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Allow user to change its choice about cookies',
+					),
+					'cookieConsentOptOutMessage'           => array(
+						'type'        => 'String',
+						'description' => 'Consent message for user tracking.',
+					),
+					'cookieConsentOptOutMessageOk'         => array(
+						'type'        => 'String',
+						'description' => 'Button text to accept tracking.',
+					),
+					'cookieConsentOptOutClose'             => array(
+						'type'        => 'String',
+						'description' => 'Button text to close banner.',
+					),
+					'cookieConsentOptOutEdit'              => array(
+						'type'        => 'String',
+						'description' => 'Button text to edit tracking preferences.',
+					),
+					'cookieConsentCookieValidity'          => array(
+						'type'        => 'Integer',
+						'description' => 'User consent cookie expiration date.',
+					),
+					'cookieConsentPosition'                => array(
+						'type'        => 'String',
+						'description' => 'Where on the page to place the cookie banner.',
+					),
+					'cookieConsentTextAlign'               => array(
+						'type'        => 'String',
+						'description' => 'How to align text in the cookie banner.',
+					),
+					'cookieConsentBarWidth'                => array(
+						'type'        => 'String',
+						'description' => 'How wide the cookie bar should be. (Can return any CSS measurement)',
+					),
+					'cookieConsentBackdropCustomized'      => array(
+						'type'        => 'Boolean',
+						'description' => 'Customized cookie consent bar backdrop.',
+					),
+					'cookieConsentBackdropColor'           => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar backdrop color.',
+					),
+					'cookieConsentBackgroundColor'         => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar background color.',
+					),
+					'cookieConsentTextColor'               => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar text color.',
+					),
+					'cookieConsentLinkColor'               => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar link color.',
+					),
+					'cookieConsentAcceptButtonBackgroundColor' => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar accept button background color.',
+					),
+					'cookieConsentAcceptButtonBackgroundColorHover' => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar accept button background (:hover) color.',
+					),
+					'cookieConsentAcceptButtonColor'       => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar accept button text color.',
+					),
+					'cookieConsentAcceptButtonColorHover'  => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar accept button text (:hover) color.',
+					),
+					'cookieConsentCloseBackgroundColor'    => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar close button background color.',
+					),
+					'cookieConsentCloseColor'              => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar close button text color.',
+					),
+					'cookieConsentCloseBackgroundColorHover' => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar close button background (:hover) color.',
+					),
+					'cookieConsentCloseColorHover'         => array(
+						'type'        => 'String',
+						'description' => 'Cookie consent bar close button text (:hover) color.',
+					),
+					'matomoEnable'                         => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable Matomo',
+					),
+					'matomoHost'                           => array(
+						'type'        => 'String',
+						'description' => 'Matomo host.',
+					),
+					'matomoSiteId'                         => array(
+						'type'        => 'String',
+						'description' => 'Matomo site ID.',
+					),
+					'matomoSubdomainTracking'              => array(
+						'type'        => 'Boolean',
+						'description' => 'Track visitors across all subdomains in Matomo.',
+					),
+					'matomoPrependDomain'                  => array(
+						'type'        => 'Boolean',
+						'description' => 'Prepend the site domain to the page title when tracking in Matomo.',
+					),
+					'matomoTrackWithoutJavascript'         => array(
+						'type'        => 'Boolean',
+						'description' => 'Track users with JavaScript disabled in Matomo.',
+					),
+					'matomoCrossDomainTracking'            => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable cross domain tracking in Matomo.',
+					),
+					'matomoCrossDomainTrackingList'        => array(
+						'type'        => 'String',
+						'description' => 'Cross domain tracking site list for Matomo.',
+					),
+					'matomoHonorDoNotTrack'                => array(
+						'type'        => 'Boolean',
+						'description' => 'Enable DoNotTrack detection in Matomo.',
+					),
+					'matomoNoCookies'                      => array(
+						'type'        => 'Boolean',
+						'description' => 'Disable all tracking cookies in Matomo',
+					),
+					'matomoLinkDownloadTracking'           => array(
+						'type'        => 'Boolean',
+						'description' => 'Download & Outlink tracking in Matomo.',
+					),
+					'matomoNoHeatmaps'                     => array(
+						'type'        => 'Boolean',
+						'description' => 'Disable all heatmaps and session recordings in Matomo.',
+					),
+				),
+			)
+		);
+
 		// Object that includes all settings pages.
 		register_graphql_object_type(
 			'SEOPressSettings',
@@ -565,6 +871,9 @@ add_action(
 					),
 					'social'         => array(
 						'type' => 'SEOPressSettings_SocialNetworks',
+					),
+					'analytics'      => array(
+						'type' => 'SEOPressSettings_Analytics',
 					),
 				),
 			)
@@ -685,11 +994,88 @@ add_action(
 						'twitterCardImg'          => $seopress_social_network_options['seopress_social_twitter_card_img'],
 						'twitterCardImgSize'      => $seopress_social_network_options['seopress_social_twitter_card_img_size'],
 					);
+					$seopress_google_analytics_options = get_option( 'seopress_google_analytics_option_name' );
+					$seopress_google_analytics_settings = array(
+						'googleAnalyticsEnable'            => $seopress_google_analytics_options['seopress_google_analytics_enable'] ? true : false,
+						'googleAnalyticsUACode'            => $seopress_google_analytics_options['seopress_google_analytics_ua'],
+						'googleAnalyticsGA4Code'           => $seopress_google_analytics_options['seopress_google_analytics_ga4'],
+						'googleAnalyticsNoTrackRoles'      => array(
+							'administrator' => $seopress_google_analytics_options['seopress_google_analytics_roles']['administrator'] ? true : false,
+							'editor'        => $seopress_google_analytics_options['seopress_google_analytics_roles']['editor'] ? true : false,
+							'author'        => $seopress_google_analytics_options['seopress_google_analytics_roles']['author'] ? true : false,
+							'contributor'   => $seopress_google_analytics_options['seopress_google_analytics_roles']['contributor'] ? true : false,
+							'subscriber'    => $seopress_google_analytics_options['seopress_google_analytics_roles']['subscriber'] ? true : false,
+						),
+						'googleAnalyticsOptimize'          => $seopress_google_analytics_options['seopress_google_analytics_optimize'],
+						'googleAnalyticsAdWords'           => $seopress_google_analytics_options['seopress_google_analytics_ads'],
+						'additionalTrackingHead'           => $seopress_google_analytics_options['seopress_google_analytics_other_tracking'],
+						'additionalTrackingBody'           => $seopress_google_analytics_options['seopress_google_analytics_other_tracking_body'],
+						'additionalTrackingFooter'         => $seopress_google_analytics_options['seopress_google_analytics_other_tracking_footer'],
+						'googleAnalyticsRemarketing'       => $seopress_google_analytics_options['seopress_google_analytics_remarketing'] ? true : false,
+						'googleAnalyticsIpAnonymization'   => $seopress_google_analytics_options['seopress_google_analytics_ip_anonymization'] ? true : false,
+						'googleAnalyticsLinkAttribution'   => $seopress_google_analytics_options['seopress_google_analytics_link_attribution'] ? true : false,
+						'googleAnalyticsCrossEnable'       => $seopress_google_analytics_options['seopress_google_analytics_cross_enable'] ? true : false,
+						'googleAnalyticsCrossDomainList'   => $seopress_google_analytics_options['seopress_google_analytics_cross_domain'],
+						'googleAnalyticsLinkTrackingEnable' => $seopress_google_analytics_options['seopress_google_analytics_link_tracking_enable'] ? true : false,
+						'googleAnalyticsDownloadTrackingEnable' => $seopress_google_analytics_options['seopress_google_analytics_download_tracking_enable'] ? true : false,
+						'googleAnalyticsDownloadTracking'  => $seopress_google_analytics_options['seopress_google_analytics_download_tracking'],
+						'googleAnalyticsAffiliateTrackingEnable' => $seopress_google_analytics_options['seopress_google_analytics_affiliate_tracking_enable'] ? true : false,
+						'googleAnalyticsAffiliateTracking' => $seopress_google_analytics_options['seopress_google_analytics_affiliate_tracking'],
+						'googleAnalyticsCustomDimensionAuthor' => $seopress_google_analytics_options['seopress_google_analytics_cd_author'],
+						'googleAnalyticsCustomDimensionCategory' => $seopress_google_analytics_options['seopress_google_analytics_cd_category'],
+						'googleAnalyticsCustomDimensionTag' => $seopress_google_analytics_options['seopress_google_analytics_cd_tag'],
+						'googleAnalyticsCustomDimensionPostType' => $seopress_google_analytics_options['seopress_google_analytics_cd_post_type'],
+						'googleAnalyticsCustomDimensionLoggedIn' => $seopress_google_analytics_options['seopress_google_analytics_cd_logged_in_user'],
+						'googleAnalyticsApiClientId'       => $seopress_google_analytics_options['seopress_google_analytics_auth_client_id'],
+						'googleAnalyticsApiSecretId'       => $seopress_google_analytics_options['seopress_google_analytics_auth_secret_id'],
+						'googleAnalyticsDashboardWidget'   => $seopress_google_analytics_options['seopress_google_analytics_dashboard_widget'] ? true : false,
+						'googleAnalyticsEventPurchases'    => $seopress_google_analytics_options['seopress_google_analytics_purchases'] ? true : false,
+						'googleAnalyticsEventAddToCart'    => $seopress_google_analytics_options['seopress_google_analytics_add_to_cart'] ? true : false,
+						'googleAnalyticsEventRemoveFromCart' => $seopress_google_analytics_options['seopress_google_analytics_remove_from_cart'] ? true : false,
+						'googleAnalyticsHtmlLocation'      => $seopress_google_analytics_options['seopress_google_analytics_hook'],
+						'cookieConsentRequired'            => $seopress_google_analytics_options['seopress_google_analytics_disable'] ? true : false,
+						'cookieConsentAutomatic'           => $seopress_google_analytics_options['seopress_google_analytics_half_disable'] ? true : false,
+						'cookieConsentChangeChoice'        => $seopress_google_analytics_options['seopress_google_analytics_opt_out_edit_choice'] ? true : false,
+						'cookieConsentOptOutMessage'       => $seopress_google_analytics_options['seopress_google_analytics_opt_out_msg'],
+						'cookieConsentOptOutMessageOk'     => $seopress_google_analytics_options['seopress_google_analytics_opt_out_msg_ok'],
+						'cookieConsentOptOutClose'         => $seopress_google_analytics_options['seopress_google_analytics_opt_out_msg_close'],
+						'cookieConsentOptOutEdit'          => $seopress_google_analytics_options['seopress_google_analytics_opt_out_msg_edit'],
+						'cookieConsentCookieValidity'      => $seopress_google_analytics_options['seopress_google_analytics_cb_exp_date'] ?: 0,
+						'cookieConsentPosition'            => $seopress_google_analytics_options['seopress_google_analytics_cb_pos'],
+						'cookieConsentTextAlign'           => $seopress_google_analytics_options['seopress_google_analytics_cb_txt_align'],
+						'cookieConsentBarWidth'            => $seopress_google_analytics_options['seopress_google_analytics_cb_width'],
+						'cookieConsentBackdropCustomized'  => $seopress_google_analytics_options['seopress_google_analytics_cb_backdrop'] ? true : false,
+						'cookieConsentBackdropColor'       => $seopress_google_analytics_options['seopress_google_analytics_cb_backdrop_bg'],
+						'cookieConsentBackgroundColor'     => $seopress_google_analytics_options['seopress_google_analytics_cb_bg'],
+						'cookieConsentTextColor'           => $seopress_google_analytics_options['seopress_google_analytics_cb_txt_col'],
+						'cookieConsentLinkColor'           => $seopress_google_analytics_options['seopress_google_analytics_cb_lk_col'],
+						'cookieConsentAcceptButtonBackgroundColor' => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_bg'],
+						'cookieConsentAcceptButtonBackgroundColorHover' => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_bg_hov'],
+						'cookieConsentAcceptButtonColor'   => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_col'],
+						'cookieConsentAcceptButtonColorHover' => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_col_hov'],
+						'cookieConsentCloseBackgroundColor' => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_sec_bg'],
+						'cookieConsentCloseColor'          => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_sec_col'],
+						'cookieConsentCloseBackgroundColorHover' => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_sec_bg_hov'],
+						'cookieConsentCloseColorHover'     => $seopress_google_analytics_options['seopress_google_analytics_cb_btn_sec_col_hov'],
+						'matomoEnable'                     => $seopress_google_analytics_options['seopress_google_analytics_matomo_enable'] ? true : false,
+						'matomoHost'                       => $seopress_google_analytics_options['seopress_google_analytics_matomo_id'],
+						'matomoSiteId'                     => $seopress_google_analytics_options['seopress_google_analytics_matomo_site_id'],
+						'matomoSubdomainTracking'          => $seopress_google_analytics_options['seopress_google_analytics_matomo_subdomains'] ? true : false,
+						'matomoPrependDomain'              => $seopress_google_analytics_options['seopress_google_analytics_matomo_site_domain'] ? true : false,
+						'matomoTrackWithoutJavascript'     => $seopress_google_analytics_options['seopress_google_analytics_matomo_no_js'] ? true : false,
+						'matomoCrossDomainTracking'        => $seopress_google_analytics_options['seopress_google_analytics_matomo_cross_domain'] ? true : false,
+						'matomoCrossDomainTrackingList'    => $seopress_google_analytics_options['seopress_google_analytics_matomo_cross_domain_sites'],
+						'matomoHonorDoNotTrack'            => $seopress_google_analytics_options['seopress_google_analytics_matomo_dnt'] ? true : false,
+						'matomoNoCookies'                  => $seopress_google_analytics_options['seopress_google_analytics_matomo_no_cookies'] ? true : false,
+						'matomoLinkDownloadTracking'       => $seopress_google_analytics_options['seopress_google_analytics_matomo_link_tracking'] ? true : false,
+						'matomoNoHeatmaps'                 => $seopress_google_analytics_options['seopress_google_analytics_matomo_no_heatmaps'] ? true : false,
+					);
 					return array(
 						'hasProLicense'  => get_option( 'seopress_pro_license_status' ) === 'valid',
 						'titlesMetas'    => $seopress_titles_settings,
 						'xmlHtmlSitemap' => $seopress_xml_html_sitemap_settings,
 						'social'         => $seopress_social_network_settings,
+						'analytics'      => $seopress_google_analytics_settings,
 					);
 				},
 			)
