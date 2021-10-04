@@ -6,7 +6,7 @@
  * Description:     A WPGraphQL Extension that adds support for SEOPress
  * Author:          Alex Moon
  * Author URI:      https://moonmeister.net
- * Text Domain:     wp-graphql-seopres
+ * Text Domain:     wp-graphql-seopress
  * Domain Path:     /languages
  * Version:         2.0
  * Requires PHP:    7.0
@@ -1307,7 +1307,7 @@ add_action(
 			)
 		);
 
-		// PRO Settings
+		// PRO Settings.
 		register_graphql_object_type(
 			'SEOPressSettings_Time',
 			array(
