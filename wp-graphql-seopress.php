@@ -131,7 +131,7 @@ add_action(
 					'type'        => 'String',
 					'description' => 'Target keywords separated by commas.',
 				),
-				'has_pro_license'           => array(
+				'hasProLicense'             => array(
 					'type'        => 'Boolean',
 					'description' => 'Whether or not the site has a pro license.',
 				),
@@ -2675,9 +2675,9 @@ add_action(
 								if ( get_option( 'seopress_pro_license_status' ) === 'valid' ) {
 									$seo['proSchemas'] = wp_json_encode( get_post_meta( $post->ID, '_seopress_pro_schemas', true ) );
 									$seo['proSchemasManual'] = wp_json_encode( get_post_meta( $post->ID, '_seopress_pro_schemas_manual', true ) );
-									$seo['has_pro_license'] = true;
+									$seo['hasProLicense'] = true;
 								} else {
-									$seo['has_pro_license'] = false;
+									$seo['hasProLicense'] = false;
 								}
 
 								return ! empty( $seo ) ? $seo : null;
@@ -2732,9 +2732,9 @@ add_action(
 								if ( get_option( 'seopress_pro_license_status' ) === 'valid' ) {
 									$seo['proSchemas'] = wp_json_encode( get_post_meta( $term->ID, '_seopress_pro_schemas', true ) );
 									$seo['proSchemasManual'] = wp_json_encode( get_post_meta( $term->ID, '_seopress_pro_schemas_manual', true ) );
-									$seo['has_pro_license'] = true;
+									$seo['hasProLicense'] = true;
 								} else {
-									$seo['has_pro_license'] = false;
+									$seo['hasProLicense'] = false;
 								}
 
 								return ! empty( $seo ) ? $seo : null;
