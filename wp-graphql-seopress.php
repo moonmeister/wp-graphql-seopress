@@ -22,7 +22,48 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
+use WP_Query;
 use WPGraphQL\AppContext;
+
+/**
+ * Returns the post ID of a given input URL
+ *
+ * @param string $url The URL of the item to lookup.
+ * @return int|\WP_Post The post ID of the attachment
+ */
+function get_attachment_id( string $url ) {
+	$attachment_id = 0;
+	$dir           = wp_upload_dir();
+	if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) { // Is URL in uploads directory?
+		$file       = basename( $url );
+		$query_args = array(
+			'post_type'   => 'attachment',
+			'post_status' => 'inherit',
+			'fields'      => 'ids',
+			'meta_query'  => array(
+				array(
+					'value'   => $file,
+					'compare' => 'LIKE',
+					'key'     => '_wp_attachment_metadata',
+				),
+			),
+		);
+		$query      = new WP_Query( $query_args );
+		if ( $query->have_posts() ) {
+			foreach ( $query->posts as $post_id ) {
+				$meta                = wp_get_attachment_metadata( $post_id );
+				$original_file       = basename( $meta['file'] );
+				$cropped_image_files = wp_list_pluck( $meta['sizes'], 'file' );
+				if ( $original_file === $file || in_array( $file, $cropped_image_files ) ) {
+					$attachment_id = $post_id;
+					break;
+				}
+			}
+		}
+	}
+
+	return $attachment_id;
+}
 
 add_action(
 	'graphql_register_types',
@@ -595,7 +636,7 @@ add_action(
 						'description' => 'Name of knowledge graph object.',
 					),
 					'knowledgeImg'               => array(
-						'type'        => 'String',
+						'type'        => 'MediaItem',
 						'description' => 'Photo or logo for knowledge graph object.',
 					),
 					'knowledgePhone'             => array(
@@ -639,7 +680,7 @@ add_action(
 						'description' => 'Enable Open Graph Data.',
 					),
 					'facebookImg'                => array(
-						'type'        => 'String',
+						'type'        => 'MediaItem',
 						'description' => 'Default Image for Open Graph.',
 					),
 					'facebookImgDefault'         => array(
@@ -671,7 +712,7 @@ add_action(
 						'description' => 'Use Open Graph if no Twitter cards.',
 					),
 					'twitterCardImg'             => array(
-						'type'        => 'String',
+						'type'        => 'MediaItem',
 						'description' => 'Default Twitter card image,',
 					),
 					'twitterCardImgSize'         => array(
@@ -1904,7 +1945,7 @@ add_action(
 			'seoPressSettings',
 			array(
 				'type'    => 'SEOPressSettings',
-				'resolve' => function () {
+				'resolve' => function ( $seopressSettings, array $args, AppContext $context ) {
 					$seopress_titles_options = get_option( 'seopress_titles_option_name' );
 					$seopress_titles_settings = array(
 						'home_site_title'         => $seopress_titles_options['seopress_titles_home_site_title'],
@@ -2044,7 +2085,7 @@ add_action(
 					$seopress_social_network_settings = array(
 						'knowledgeType'              => $seopress_social_network_options['seopress_social_knowledge_type'],
 						'knowledgeName'              => $seopress_social_network_options['seopress_social_knowledge_name'],
-						'knowledgeImg'               => $seopress_social_network_options['seopress_social_knowledge_img'],
+						'knowledgeImg'               => $context->get_loader( 'post' )->load_deferred( get_attachment_id( $seopress_social_network_options['seopress_social_knowledge_img'] ) ),
 						'knowledgePhone'             => $seopress_social_network_options['seopress_social_knowledge_phone'],
 						'knowledgeContactType'       => $seopress_social_network_options['seopress_social_knowledge_contact_type'],
 						'knowledgeContactOption'     => $seopress_social_network_options['seopress_social_knowledge_contact_option'],
@@ -2055,7 +2096,7 @@ add_action(
 						'accountYoutube'             => $seopress_social_network_options['seopress_social_accounts_youtube'],
 						'accountLinkedIn'            => $seopress_social_network_options['seopress_social_accounts_linkedin'],
 						'facebookOg'                 => (bool) $seopress_social_network_options['seopress_social_facebook_og'],
-						'facebookImg'                => $seopress_social_network_options['seopress_social_facebook_img'],
+						'facebookImg'                => $context->get_loader( 'post' )->load_deferred( get_attachment_id( $seopress_social_network_options['seopress_social_facebook_img'] ) ),
 						'facebookImgDefault'         => (bool) $seopress_social_network_options['seopress_social_facebook_img_default'],
 						'facebookImgCustomPostTypes' => array(
 							'product' => array(
@@ -2067,7 +2108,7 @@ add_action(
 						'facebookAppId'              => $seopress_social_network_options['seopress_social_facebook_app_id'],
 						'twitterCard'                => (bool) $seopress_social_network_options['seopress_social_twitter_card'],
 						'twitterCardOg'              => (bool) $seopress_social_network_options['seopress_social_twitter_card_og'],
-						'twitterCardImg'             => $seopress_social_network_options['seopress_social_twitter_card_img'],
+						'twitterCardImg'             => $context->get_loader( 'post' )->load_deferred( get_attachment_id( $seopress_social_network_options['seopress_social_twitter_card_img'] ) ),
 						'twitterCardImgSize'         => $seopress_social_network_options['seopress_social_twitter_card_img_size'],
 					);
 					$seopress_google_analytics_options = get_option( 'seopress_google_analytics_option_name' );
@@ -2654,10 +2695,10 @@ add_action(
 									'metaRobotsNofollow'   => trim( get_post_meta( $post->ID, '_seopress_robots_follow', true ) ) === 'yes',
 									'opengraphTitle'       => trim( get_post_meta( $post->ID, '_seopress_social_fb_title', true ) ),
 									'opengraphDescription' => trim( get_post_meta( $post->ID, '_seopress_social_fb_desc', true ) ),
-									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred( get_post_meta( $post->ID, '_seopress_social_fb_img', true ) ),
+									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred( get_attachment_id( get_post_meta( $post->ID, '_seopress_social_fb_img', true ) ) ),
 									'twitterTitle'         => trim( get_post_meta( $post->ID, '_seopress_social_twitter_title', true ) ),
 									'twitterDescription'   => trim( get_post_meta( $post->ID, '_seopress_social_twitter_desc', true ) ),
-									'twitterImage'         => $context->get_loader( 'post' )->load_deferred( get_post_meta( $post->ID, '_seopress_social_twitter_img', true ) ),
+									'twitterImage'         => $context->get_loader( 'post' )->load_deferred( get_attachment_id( get_post_meta( $post->ID, '_seopress_social_twitter_img', true ) ) ),
 									'metaRobotsOdp'        => trim( get_post_meta( $post->ID, '_seopress_robots_odp', true ) ) === 'yes',
 									'metaRobotsImageIndex' => trim( get_post_meta( $post->ID, '_seopress_robots_imageindex', true ) ) === 'yes',
 									'metaRobotsArchive'    => trim( get_post_meta( $post->ID, '_seopress_robots_archive', true ) ) === 'yes',
@@ -2711,10 +2752,10 @@ add_action(
 									'metaRobotsNofollow'   => trim( get_term_meta( $term->term_id, '_seopress_robots_follow', true ) ) === 'yes',
 									'opengraphTitle'       => trim( get_term_meta( $term->term_id, '_seopress_social_fb_title', true ) ),
 									'opengraphDescription' => trim( get_term_meta( $term->term_id, '_seopress_social_fb_desc', true ) ),
-									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred( get_term_meta( $term->term_id, '_seopress_social_fb_img', true ), $context ),
+									'opengraphImage'       => $context->get_loader( 'post' )->load_deferred( get_attachment_id( get_post_meta( $term->term_id, '_seopress_social_fb_img', true ) ) ),
 									'twitterTitle'         => trim( get_term_meta( $term->term_id, '_seopress_social_twitter_title', true ) ),
 									'twitterDescription'   => trim( get_term_meta( $term->term_id, '_seopress_social_twitter_desc', true ) ),
-									'twitterImage'         => $context->get_loader( 'post' )->load_deferred( get_term_meta( $term->term_id, '_seopress_social_twitter_img', true ), $context ),
+									'twitterImage'         => $context->get_loader( 'post' )->load_deferred( get_attachment_id( get_post_meta( $term->term_id, '_seopress_social_twitter_img', true ) ) ),
 									'metaRobotsOdp'        => trim( get_post_meta( $term->ID, '_seopress_robots_odp', true ) ) === 'yes',
 									'metaRobotsImageIndex' => trim( get_post_meta( $term->ID, '_seopress_robots_imageindex', true ) ) === 'yes',
 									'metaRobotsArchive'    => trim( get_post_meta( $term->ID, '_seopress_robots_archive', true ) ) === 'yes',
